@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.xxx.xxx.viewModel.LoginViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@mipmap/login_bg"
+        android:fitsSystemWindows="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="110dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_name"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/et_user_tel"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:hint="@string/yourPhone"
+                android:text="@={viewModel.userName}"
+                android:inputType="number"
+                android:textColor="@color/textcolorffe0"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="3dp"
+            android:background="@color/white" />
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_pass"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/et_user_pass"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_46"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/yourPass"
+                android:text="@={viewModel.password}"
+
+                android:inputType="numberPassword"
+                android:textColor="@color/textcolorffe0"
+                android:textSize="@dimen/sp_16" />
+
+            <ImageView
+                android:id="@+id/iv_swich_passwrod"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="6dp"
+                binding:onClickCommand="@{viewModel.openEye}"
+                android:src="@mipmap/show_psw_press" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="3dp"
+            android:background="@color/white" />
+
+
+        <TextView
+            android:id="@+id/tv_login_user"
+            android:layout_width="292dp"
+            android:layout_height="@dimen/dp_46"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/bg_white_register"
+            android:gravity="center"
+            android:text="@string/text_upload"
+            android:textColor="@color/textcolorff56"
+            binding:onClickCommand="@{viewModel.loginOnClickCommand}"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="292dp"
+            android:layout_height="@dimen/dp_46"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_black_login"
+            android:gravity="center"
+            android:text="@string/text_register"
+            binding:onClickCommand="@{viewModel.toRegister}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_18" />
+
+        <TextView
+            android:id="@+id/tv_login_forgot_pwd"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:text="忘记密码"
+            android:textColor="@color/white"
+            binding:onClickCommand="@{viewModel.forgetPass}"
+            android:textSize="@dimen/sp_18" />
+
+
+    </LinearLayout>
+</layout>
