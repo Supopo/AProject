@@ -19,7 +19,7 @@ import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.activity.RegisterActivity;
 import com.xxx.xxx.apiserver.ApiServer;
 import com.xxx.xxx.bean.LoginBean;
-import com.xxx.xxx.utils.RetrofitClient;
+import com.xxx.xxx.http.RetrofitClient;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;

@@ -1,4 +1,4 @@
-package com.xxx.xxx.utils;
+package com.xxx.xxx.http;
 
 import android.content.Context;
 import android.text.TextUtils;
