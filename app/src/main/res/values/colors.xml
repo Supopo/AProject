@@ -6,6 +6,7 @@
     <color name="textcolorffe0">#ffe0e0e0</color>
     <color name="textcolorff56">#ff565656</color>
     <color name="themeColor">#fff</color>
+    <color name="bgColor">#fff</color>
     <color name="btn_blue">#1C54E7</color>
     <color name="btn_white">#fff5f5f5</color>
     <color name="gray_999">#999999</color>
