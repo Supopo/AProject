@@ -4,7 +4,6 @@ package ${packageName}.viewModel;
         import androidx.annotation.NonNull;
     </#if>
 public class ${viewModelClass} extends BaseViewModel {
-
 	<#if creatAdapter>
     public MutableLiveData<List<${beanClass}>> dataList = new MutableLiveData<>();
 	<#if hasLoadMore>
