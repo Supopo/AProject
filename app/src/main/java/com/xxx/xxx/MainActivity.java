@@ -16,17 +16,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.xxx.mvvmlib.mvvmhabit.base.BaseActivity;
+
 import com.xxx.xxx.databinding.ActivityMainBinding;
-import com.xxx.xxx.fragment.AFragment;
-import com.xxx.xxx.fragment.BFragment;
-import com.xxx.xxx.fragment.CFragment;
-import com.xxx.xxx.fragment.DFragment;
+import com.xxx.xxx.fragment.NewsFragment;
 import com.xxx.xxx.viewModel.MainViewModel;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.goldze.mvvmhabit.base.BaseActivity;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> {
     private List<Fragment> mFragments;
@@ -44,7 +43,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void initData() {
-        rlLeft.setVisibility(View.INVISIBLE);
+        ivLeft.setVisibility(View.INVISIBLE);
         //初始化Fragment
         initFragment();
         //初始化底部Button
@@ -53,10 +52,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private void initFragment() {
         mFragments = new ArrayList<>();
-        mFragments.add(new AFragment());
-        mFragments.add(new BFragment());
-        mFragments.add(new CFragment());
-        mFragments.add(new DFragment());
+        mFragments.add(new NewsFragment());
+        mFragments.add(new NewsFragment());
+        mFragments.add(new NewsFragment());
+        mFragments.add(new NewsFragment());
+
         //默认选中第一个
         commitAllowingStateLoss(0);
     }

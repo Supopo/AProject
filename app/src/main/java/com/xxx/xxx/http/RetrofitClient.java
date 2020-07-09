@@ -3,14 +3,7 @@ package com.xxx.xxx.http;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.xxx.mvvmlib.mvvmhabit.http.cookie.CookieJarImpl;
-import com.xxx.mvvmlib.mvvmhabit.http.cookie.store.PersistentCookieStore;
-import com.xxx.mvvmlib.mvvmhabit.http.interceptor.BaseInterceptor;
-import com.xxx.mvvmlib.mvvmhabit.http.interceptor.CacheInterceptor;
-import com.xxx.mvvmlib.mvvmhabit.http.interceptor.logging.Level;
-import com.xxx.mvvmlib.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
-import com.xxx.mvvmlib.mvvmhabit.utils.KLog;
-import com.xxx.mvvmlib.mvvmhabit.utils.Utils;
+
 import com.xxx.xxx.BuildConfig;
 import com.xxx.xxx.app.Constant;
 
@@ -22,6 +15,14 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
+import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
+import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.CacheInterceptor;
+import me.goldze.mvvmhabit.http.interceptor.logging.Level;
+import me.goldze.mvvmhabit.http.interceptor.logging.LoggingInterceptor;
+import me.goldze.mvvmhabit.utils.KLog;
+import me.goldze.mvvmhabit.utils.Utils;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;

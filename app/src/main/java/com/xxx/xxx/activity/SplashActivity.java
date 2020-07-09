@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 
-import com.xxx.mvvmlib.mvvmhabit.base.BaseActivity;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
 import com.xxx.xxx.databinding.ActivitySplashBinding;
@@ -14,6 +13,8 @@ import com.xxx.xxx.viewModel.SplashViewModel;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import me.goldze.mvvmhabit.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
 
@@ -70,7 +71,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     public void initData() {
 
-        rlRoot.setVisibility(View.GONE);
+        rlTitle.setVisibility(View.GONE);
         binding.tvJump.setText("跳过 " + recLen);
         timer.schedule(task, 1000, 1000);//等待时间一秒，停顿时间一秒
 

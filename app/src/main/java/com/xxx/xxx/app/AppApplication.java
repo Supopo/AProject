@@ -1,11 +1,13 @@
 package com.xxx.xxx.app;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.xxx.mvvmlib.mvvmhabit.base.BaseApplication;
-import com.xxx.mvvmlib.mvvmhabit.crash.CaocConfig;
-import com.xxx.mvvmlib.mvvmhabit.utils.KLog;
+
 import com.xxx.xxx.BuildConfig;
 import com.xxx.xxx.R;
+
+import me.goldze.mvvmhabit.base.BaseApplication;
+import me.goldze.mvvmhabit.crash.CaocConfig;
+import me.goldze.mvvmhabit.utils.KLog;
 
 
 public class AppApplication extends BaseApplication {

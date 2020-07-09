@@ -7,19 +7,22 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-import com.xxx.mvvmlib.BR;
-import com.xxx.mvvmlib.mvvmhabit.base.BaseActivity;
+
+import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
+import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.databinding.ActivityLoginBinding;
 import com.xxx.xxx.viewModel.LoginViewModel;
+
+import me.goldze.mvvmhabit.base.BaseActivity;
 
 
 /**
  * 一个MVVM模式的登陆界面
  */
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> {
-
     //ActivityLoginBinding类是databinding框架自定生成的,对应activity_login.xml
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -32,14 +35,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public void initParam() {
-        super.initParam();
+    public void initData() {
+        super.initData();
+        rlTitle.setVisibility(View.GONE);
     }
 
     @Override
-    public void initData() {
-        super.initData();
-        rlRoot.setVisibility(View.GONE);
+    public LoginViewModel initViewModel() {
+        //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
+        return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
 
     @Override
@@ -52,15 +57,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
                 if (viewModel.uc.pSwitchEvent.getValue()) {
                     //密码可见
                     //在xml中定义id后,使用binding可以直接拿到这个view的引用,不再需要findViewById去找控件了
-                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw);
-                    binding.etUserPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    binding.ivSwichPasswrod.setImageResource(R.mipmap.icon_show_psw);
+                    binding.etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //密码不可见
-                    binding.ivSwichPasswrod.setImageResource(R.mipmap.show_psw_press);
-                    binding.etUserPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    binding.ivSwichPasswrod.setImageResource(R.mipmap.icon_show_psw_press);
+                    binding.etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
     }
-
 }

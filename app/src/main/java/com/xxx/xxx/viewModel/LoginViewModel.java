@@ -2,6 +2,7 @@ package com.xxx.xxx.viewModel;
 
 import android.app.Application;
 import android.text.TextUtils;
+import android.view.View;
 
 
 import androidx.annotation.NonNull;
@@ -9,23 +10,23 @@ import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
 
-import com.xxx.mvvmlib.mvvmhabit.base.BaseViewModel;
-import com.xxx.mvvmlib.mvvmhabit.binding.command.BindingAction;
-import com.xxx.mvvmlib.mvvmhabit.binding.command.BindingCommand;
-import com.xxx.mvvmlib.mvvmhabit.bus.event.SingleLiveEvent;
-import com.xxx.mvvmlib.mvvmhabit.utils.RxUtils;
-import com.xxx.mvvmlib.mvvmhabit.utils.ToastUtils;
 import com.xxx.xxx.MainActivity;
+
 import com.xxx.xxx.activity.RegisterActivity;
-import com.xxx.xxx.apiserver.ApiServer;
-import com.xxx.xxx.bean.LoginBean;
-import com.xxx.xxx.http.RetrofitClient;
+import com.xxx.xxx.data.DemoRepository;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import me.goldze.mvvmhabit.base.BaseViewModel;
+import me.goldze.mvvmhabit.binding.command.BindingAction;
+import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.binding.command.BindingConsumer;
+import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
+import me.goldze.mvvmhabit.utils.RxUtils;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 
-public class LoginViewModel extends BaseViewModel {
+public class LoginViewModel extends BaseViewModel<DemoRepository> {
     //用户名的绑定
     public ObservableField<String> userName = new ObservableField<>("");
     //密码的绑定
@@ -40,53 +41,58 @@ public class LoginViewModel extends BaseViewModel {
         public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
     }
 
-    public LoginViewModel(@NonNull Application application) {
-        super(application);
+    public LoginViewModel(@NonNull Application application, DemoRepository repository) {
+        super(application, repository);
+        //从本地取得数据绑定到View层
+        userName.set(model.getUserName());
+        password.set(model.getPassword());
     }
 
-
-    //登录按钮的点击事件
-    public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
+    //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
+    public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-//            login();
-            startActivity(MainActivity.class);
-            finish();
-
+            userName.set("");
         }
     });
-
-    //注册
-    public BindingCommand toRegister = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            ToastUtils.showShort("注册");
-            startActivity(RegisterActivity.class);
-        }
-    });
-
     //密码显示开关  (你可以尝试着狂按这个按钮,会发现它有防多次点击的功能)
-    public BindingCommand openEye = new BindingCommand(new BindingAction() {
+    public BindingCommand passwordShowSwitchOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             //让观察者的数据改变,逻辑从ViewModel层转到View层，在View层的监听则会被调用
             uc.pSwitchEvent.setValue(uc.pSwitchEvent.getValue() == null || !uc.pSwitchEvent.getValue());
         }
     });
-    //忘记密码
-
-    public BindingCommand forgetPass = new BindingCommand(new BindingAction() {
+    //用户名输入框焦点改变的回调事件
+    public BindingCommand<Boolean> onFocusChangeCommand = new BindingCommand<>(new BindingConsumer<Boolean>() {
         @Override
-        public void call() {
-            ToastUtils.showShort("忘记密码");
+        public void call(Boolean hasFocus) {
+            if (hasFocus) {
+                clearBtnVisibility.set(View.VISIBLE);
+            } else {
+                clearBtnVisibility.set(View.INVISIBLE);
+            }
         }
     });
-
+    //登录按钮的点击事件
+    public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            login();
+        }
+    });
+    //注册按钮的点击事件
+    public BindingCommand registerOnClickCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startActivity(RegisterActivity.class);
+        }
+    });
 
     /**
      * 网络模拟一个登陆操作
      **/
-    public void login() {
+    private void login() {
         if (TextUtils.isEmpty(userName.get())) {
             ToastUtils.showShort("请输入账号！");
             return;
@@ -96,7 +102,7 @@ public class LoginViewModel extends BaseViewModel {
             return;
         }
         //RaJava模拟登录
-        addSubscribe(RetrofitClient.getInstance().create(ApiServer.class).getRecommendPoetry()
+        addSubscribe(model.login()
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -104,12 +110,14 @@ public class LoginViewModel extends BaseViewModel {
                         showDialog();
                     }
                 })
-                .subscribe(new Consumer<LoginBean>() {
+                .subscribe(new Consumer<Object>() {
                     @Override
-                    public void accept(LoginBean o) throws Exception {
+                    public void accept(Object o) throws Exception {
                         dismissDialog();
                         //保存账号密码
-                        //跳到主页
+                        model.saveUserName(userName.get());
+                        model.savePassword(password.get());
+                        //进入MainActivity页面
                         startActivity(MainActivity.class);
                         //关闭页面
                         finish();

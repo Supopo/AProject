@@ -57,7 +57,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     //glide图片加载库
-    api(rootProject.ext.dependencies.glide) {
+    api (rootProject.ext.dependencies.glide){
         exclude group: 'com.android.support'
     }
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
@@ -74,6 +74,4 @@ dependencies {
 
     //QMUI小功能控件库
     api rootProject.ext.dependencies.qmui
-
-
 }

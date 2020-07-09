@@ -10,95 +10,155 @@
             type="com.xxx.xxx.viewModel.RegisterModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@mipmap/login_bg"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@mipmap/bg_login"
+            android:scaleType="fitXY" />
 
         <LinearLayout
-            android:layout_width="292dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="110dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/dp_70"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_20">
 
-
-            <EditText
-                android:id="@+id/et_user_tel"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/dp_46"
-                android:background="@null"
-                android:hint="@string/yourPhone"
-                android:inputType="number"
-                android:text="@={viewModel.userPhone}"
-                android:textColor="@color/textcolorffe0"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="292dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="3dp"
-            android:background="@color/white" />
-
-
-        <LinearLayout
-            android:layout_width="292dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal">
-
-
-            <EditText
-                android:id="@+id/et_user_pass"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_46"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/yourPass"
-                android:inputType="numberPassword"
-
-                android:text="@={viewModel.code}"
-                android:textColor="@color/textcolorffe0"
-                android:textSize="16sp" />
-
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.codeText}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                binding:onClickCommand="@{viewModel.getCode}" />
+                android:src="@mipmap/ic_logo" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_25"
+                android:background="@mipmap/bg_rounded_rectangle_w"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_22"
+                    android:src="@mipmap/icon_user" />
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:background="@color/textColorHint" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请输入手机号"
+                    android:inputType="number"
+                    android:text="@={viewModel.userPhone}"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/textColorHint"
+                    android:textSize="@dimen/sp_16"
+                    binding:onFocusChangeCommand="@{viewModel.onFocusChange}" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:padding="@dimen/dp_6"
+                    android:src="@mipmap/icon_clean"
+                    android:visibility="@{viewModel.clearBtnVisibility}"
+                    binding:onClickCommand="@{viewModel.clearTel}" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@mipmap/bg_rounded_rectangle_w"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_16">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_22"
+                    android:layout_height="@dimen/dp_22"
+                    android:src="@mipmap/icon_password" />
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_8"
+                    android:background="@color/textColorHint" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="输入验证码"
+                    android:inputType="number"
+                    android:text="@={viewModel.code}"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/textColorHint"
+                    android:textSize="@dimen/sp_16"
+                    binding:onFocusChangeCommand="@{viewModel.onFocusChange}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:minEms="5"
+                    android:layout_height="@dimen/dp_30"
+                    android:gravity="center_vertical"
+                    android:text="@{viewModel.codeText}"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/sp_16"
+                    binding:onClickCommand="@{viewModel.getCode}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_25"
+                android:background="@mipmap/bg_rounded_rectangle_b"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp_6">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackground"
+                    android:text="上一步"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18"
+                    binding:onClickCommand="@{viewModel.toLast}" />
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_gravity="center"
+                    android:background="@color/viewLineColor" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackground"
+                    android:text="下一步"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18"
+                    binding:onClickCommand="@{viewModel.toRegist}" />
+            </LinearLayout>
+
         </LinearLayout>
-
-        <View
-            android:layout_width="292dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="3dp"
-            android:background="@color/white" />
-
-
-        <TextView
-            android:id="@+id/tv_login_user"
-            android:layout_width="292dp"
-            android:layout_height="@dimen/dp_46"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@drawable/bg_white_register"
-            android:gravity="center"
-            android:text="@string/text_next"
-            android:textColor="@color/textcolorff56"
-            android:textSize="@dimen/sp_18"
-            binding:onClickCommand="@{viewModel.regist}" />
-
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

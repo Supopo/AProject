@@ -1,15 +1,16 @@
 package com.xxx.xxx.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
-import com.xxx.mvvmlib.mvvmhabit.base.BaseActivity;
-import com.xxx.mvvmlib.mvvmhabit.utils.ToastUtils;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
 import com.xxx.xxx.databinding.ActivityRegisterBinding;
 import com.xxx.xxx.viewModel.RegisterModel;
 
-public class RegisterActivity  extends BaseActivity<ActivityRegisterBinding, RegisterModel> {
+import me.goldze.mvvmhabit.base.BaseActivity;
+
+public class RegisterActivity extends BaseActivity<ActivityRegisterBinding, RegisterModel> {
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_register;
@@ -23,15 +24,11 @@ public class RegisterActivity  extends BaseActivity<ActivityRegisterBinding, Reg
     @Override
     public void initViewObservable() {
         super.initViewObservable();
-        ToastUtils.showShort("ddd");
-        rlLeft.setOnClickListener(view -> {
-            startActivity(LoginActivity.class);
+    }
 
-        });
-
-        viewModel.uc.pSwitchEvent.observe(this,v->{
-            viewModel.codeText.setValue(v);
-        });
-
+    @Override
+    public void initData() {
+        super.initData();
+        rlTitle.setVisibility(View.GONE);
     }
 }
