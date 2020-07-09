@@ -4,17 +4,16 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.view.View;
 
-
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
-
 import com.xxx.xxx.MainActivity;
-
 import com.xxx.xxx.activity.RegisterActivity;
-import com.xxx.xxx.data.DemoRepository;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.goldze.mvvmhabit.base.BaseViewModel;
@@ -26,7 +25,7 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 
-public class LoginViewModel extends BaseViewModel<DemoRepository> {
+public class LoginViewModel extends BaseViewModel {
     //用户名的绑定
     public ObservableField<String> userName = new ObservableField<>("");
     //密码的绑定
@@ -36,17 +35,15 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
 
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
+    }
+
     public class UIChangeObservable {
         //密码开关观察者
         public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
     }
 
-    public LoginViewModel(@NonNull Application application, DemoRepository repository) {
-        super(application, repository);
-        //从本地取得数据绑定到View层
-        userName.set(model.getUserName());
-        password.set(model.getPassword());
-    }
 
     //清除用户名的点击事件, 逻辑从View层转换到ViewModel层
     public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new BindingAction() {
@@ -101,8 +98,9 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
             ToastUtils.showShort("请输入密码！");
             return;
         }
+        Observable<Object> login = Observable.just(new Object()).delay(2, TimeUnit.SECONDS); //延迟2秒
         //RaJava模拟登录
-        addSubscribe(model.login()
+        addSubscribe(login
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -115,8 +113,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                     public void accept(Object o) throws Exception {
                         dismissDialog();
                         //保存账号密码
-                        model.saveUserName(userName.get());
-                        model.savePassword(password.get());
+
                         //进入MainActivity页面
                         startActivity(MainActivity.class);
                         //关闭页面

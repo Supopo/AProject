@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.View;
 
 import com.xxx.xxx.BR;
+import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
 import com.xxx.xxx.databinding.ActivitySplashBinding;
 import com.xxx.xxx.viewModel.SplashViewModel;

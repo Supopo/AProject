@@ -5,6 +5,5 @@ package com.xxx.xxx.app;
  * Description: 常量
  */
 public class Constant {
-    public static boolean isDebug = true;
-    public static String baseUrl = "http://192.168.101.198:8080/";
+    public static String baseUrl = "https://gank.io/api/v2/";
 }

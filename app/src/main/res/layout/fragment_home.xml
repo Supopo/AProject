@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.xxx.xxx.viewModel.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pageColor"
+        android:orientation="vertical">
+
+        <TextView
+            android:padding="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200"
+            android:text="@{viewModel.bannersRes}" />
+
+        <Button
+            onClickCommand="@{viewModel.getBannersCommand}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取轮播图1" />
+        <Button
+            onClickCommand="@{viewModel.getBannersCommand2}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="获取轮播图2" />
+
+    </LinearLayout>
+</layout>

@@ -2,6 +2,7 @@ package me.goldze.mvvmhabit.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.lang.reflect.ParameterizedType;
@@ -32,7 +34,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     protected V binding;
     protected VM viewModel;
     private int viewModelId;
-    private MaterialDialog dialog;
+    //    private MaterialDialog dialog;  //  普通Dialog
+    private QMUITipDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,14 +162,31 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         });
     }
 
+    //    普通Dialog
+    //    public void showDialog(String title) {
+    //        if (dialog != null) {
+    //            dialog = dialog.getBuilder().title(title).build();
+    //            dialog.show();
+    //        } else {
+    //            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(this, title, true);
+    //            dialog = builder.show();
+    //        }
+    //    }
+
     public void showDialog(String title) {
-        if (dialog != null) {
-            dialog = dialog.getBuilder().title(title).build();
-            dialog.show();
-        } else {
-            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(getActivity(), title, true);
-            dialog = builder.show();
-        }
+        dialog = new QMUITipDialog.Builder(getActivity())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(TextUtils.isEmpty(title) ? "请稍后" : title)
+                .create();
+        dialog.show();
+    }
+
+    public void showDialog() {
+        dialog = new QMUITipDialog.Builder(getActivity())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("请稍后")
+                .create();
+        dialog.show();
     }
 
     public void dismissDialog() {
