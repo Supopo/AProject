@@ -1,7 +1,9 @@
 package com.xxx.xxx.apiserver;
 
 import com.xxx.xxx.bean.BannerBean;
+import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.http.RetrofitClient;
+import com.xxx.xxx.viewModel.GirlsViewModel;
 import com.xxx.xxx.viewModel.HomeViewModel;
 
 import java.util.ArrayList;
@@ -53,9 +55,7 @@ public class UserRepository {
 
     private ApiServer userApi = RetrofitClient.getInstance().create(ApiServer.class);
 
-    public List<BannerBean> getBanners(HomeViewModel viewModel) {
-        final List<BannerBean> bannerBeans = new ArrayList<>();
-
+    public void getBanners(HomeViewModel viewModel) {
         userApi.getBanners()
                 .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
                 .compose(RxUtils.schedulersTransformer())  // 线程调度
@@ -69,8 +69,7 @@ public class UserRepository {
                 .subscribe(new DisposableObserver<BaseResponse<List<BannerBean>>>() {
                     @Override
                     public void onNext(BaseResponse<List<BannerBean>> response) {
-                        bannerBeans.addAll(response.getData());
-                        viewModel.banners.postValue(bannerBeans);
+                        viewModel.banners.postValue(response.getData());
                     }
 
                     @Override
@@ -85,7 +84,50 @@ public class UserRepository {
                         viewModel.dismissDialog();
                     }
                 });
-
-        return bannerBeans;
     }
+
+    public void getGirls(GirlsViewModel viewModel, int page, int count) {
+        userApi.getGirls(page, count)
+                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
+                .compose(RxUtils.schedulersTransformer())  // 线程调度
+                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        viewModel.showDialog("正在捕获妹子");
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseResponse<List<GirlBean>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<GirlBean>> response) {
+                        if (response.getData() != null) {
+
+                            viewModel.dataList.postValue(response.getData());
+
+                            if (response.getData().size() == 0) {
+                                //加载结束，没有更多数据了
+                                viewModel.loadStatus.postValue(0);
+                            } else {
+                                //当前页数据加载完成
+                                viewModel.loadStatus.postValue(1);
+                            }
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        viewModel.dismissDialog();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        viewModel.dismissDialog();
+                    }
+                });
+    }
+
 }

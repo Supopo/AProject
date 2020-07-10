@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.xxx.xxx.databinding.ActivityMainBinding;
+import com.xxx.xxx.fragment.GirlsFragment;
 import com.xxx.xxx.fragment.HomeFragment;
 import com.xxx.xxx.fragment.NewsFragment;
 import com.xxx.xxx.viewModel.MainViewModel;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void initFragment() {
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragment());
-        mFragments.add(new NewsFragment());
+        mFragments.add(new GirlsFragment());
         mFragments.add(new NewsFragment());
         mFragments.add(new NewsFragment());
 
