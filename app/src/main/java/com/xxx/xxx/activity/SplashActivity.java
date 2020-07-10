@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     }
 
     private void toNext() {
-        startActivity(LoginActivity.class);
+        startActivity(MainActivity.class);
         finish();
     }
 

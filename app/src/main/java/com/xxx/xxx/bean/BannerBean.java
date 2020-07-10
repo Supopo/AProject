@@ -28,7 +28,7 @@ package com.xxx.xxx.bean;
  * 描    述: 轮播图实体类
  * =====================================================
  */
-public class Banner {
+public class BannerBean {
     private String image;
     private String title;
     private String url;

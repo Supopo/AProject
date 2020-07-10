@@ -1,8 +1,7 @@
 package com.xxx.xxx.apiserver;
 
 
-import com.xxx.xxx.bean.Banner;
-import com.xxx.xxx.bean.LoginBean;
+import com.xxx.xxx.bean.BannerBean;
 
 import java.util.List;
 
@@ -13,5 +12,5 @@ import retrofit2.http.GET;
 
 public interface ApiServer {
     @GET("banners")
-    Observable<BaseResponse<List<Banner>>> getBanners();
+    Observable<BaseResponse<List<BannerBean>>> getBanners();
 }

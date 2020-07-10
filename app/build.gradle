@@ -83,4 +83,6 @@ dependencies {
     //BaseQuickAdapter 最新版本 latest.integration 但是使用这个有些系统库可能下载不下来
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:latest.integration'
 
+    //轮播图
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
 }

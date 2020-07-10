@@ -484,6 +484,55 @@ RetrofitClient.getInstance().create(DemoApiService.class)
                         
         }
     });
+方式一：
+    addSubscribe(
+                RetrofitClient.getInstance().create(ApiServer.class)
+                        .getBanners()
+                        .compose(RxUtils.schedulersTransformer()) //线程调度
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                showDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<BaseResponse<List<BannerBean>>>() {
+                            @Override
+                            public void accept(BaseResponse<List<BannerBean>> bannerBeans) throws Exception {
+                                dismissDialog();
+                            }
+                        })
+        );
+方式二：
+        //简单粗暴的请求方式
+        RetrofitClient.getInstance().create(ApiServer.class)
+                .getBanners()
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) // 请求与View周期同步
+                .compose(RxUtils.schedulersTransformer())  // 线程调度
+                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog("正在请求");
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseResponse<List<BannerBean>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<BannerBean>> response) {
+         
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+                        dismissDialog();
+                    }
+                });
 
 ```
 在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(getLifecycleProvider()))`<br>

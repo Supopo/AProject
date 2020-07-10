@@ -1,9 +1,6 @@
 package com.xxx.xxx.apiserver;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.xxx.xxx.bean.Banner;
+import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.http.RetrofitClient;
 import com.xxx.xxx.viewModel.HomeViewModel;
 
@@ -13,7 +10,6 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableObserver;
-import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 
@@ -57,9 +53,8 @@ public class UserRepository {
 
     private ApiServer userApi = RetrofitClient.getInstance().create(ApiServer.class);
 
-    public List<Banner> getBanners(BaseViewModel viewModel) {
-        final List<Banner> banners = new ArrayList<>();
-
+    public List<BannerBean> getBanners(HomeViewModel viewModel) {
+        final List<BannerBean> bannerBeans = new ArrayList<>();
 
         userApi.getBanners()
                 .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
@@ -71,12 +66,11 @@ public class UserRepository {
                         viewModel.showDialog("正在请求");
                     }
                 })
-                .subscribe(new DisposableObserver<BaseResponse<List<Banner>>>() {
+                .subscribe(new DisposableObserver<BaseResponse<List<BannerBean>>>() {
                     @Override
-                    public void onNext(BaseResponse<List<Banner>> response) {
-                        banners.addAll(response.getData());
-                        ((HomeViewModel)viewModel).banners.postValue(banners);
-                        ((HomeViewModel)viewModel).bannersRes.postValue("新数量" + response.getData().size());
+                    public void onNext(BaseResponse<List<BannerBean>> response) {
+                        bannerBeans.addAll(response.getData());
+                        viewModel.banners.postValue(bannerBeans);
                     }
 
                     @Override
@@ -92,6 +86,6 @@ public class UserRepository {
                     }
                 });
 
-        return banners;
+        return bannerBeans;
     }
 }

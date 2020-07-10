@@ -52,8 +52,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     private QMUITipDialog dialog;
     public ViewDataBinding baseBinding;
     public RelativeLayout rlTitle;
-    public TextView tvTitle;
-    public ImageView ivLeft;
+    public TextView tvTitle, tvRight;
+    public ImageView ivLeft, ivRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +101,8 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         rlTitle = baseBinding.getRoot().findViewById(R.id.rl_title);
         tvTitle = baseBinding.getRoot().findViewById(R.id.tv_title);
         ivLeft = baseBinding.getRoot().findViewById(R.id.iv_left);
+        ivRight = baseBinding.getRoot().findViewById(R.id.iv_right);
+        tvRight = baseBinding.getRoot().findViewById(R.id.tv_right);
 
         //设置页面中的布局
         FrameLayout mContainer = (FrameLayout) baseBinding.getRoot().findViewById(R.id.rl_container);
@@ -135,6 +137,18 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     public void setTitle(String title) {
         tvTitle.setText(title);
     }
+
+    public void setTitle(String title, String name) {
+        tvTitle.setText(title);
+        setTvRight(name);
+    }
+
+    public void setTvRight(String name) {
+        tvRight.setText(name);
+        tvRight.setVisibility(View.VISIBLE);
+        ivRight.setVisibility(View.GONE);
+    }
+
 
     //标题栏左边图片点击事件
     private void toLeft() {

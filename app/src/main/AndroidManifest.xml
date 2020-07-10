@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".activity.WebActivity"
+            android:screenOrientation="portrait" />
         <!-- 声明最大高宽比 解决不能全屏问题 -->
         <meta-data
             android:name="android.max_aspect"
