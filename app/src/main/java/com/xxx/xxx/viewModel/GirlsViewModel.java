@@ -16,12 +16,16 @@ import java.util.List;
 import me.goldze.mvvmhabit.base.BaseViewModel;
 
 public class GirlsViewModel extends BaseViewModel {
+    public GirlsViewModel(@NonNull Application application) {
+        super(application);
+    }
+
     private UserRepository userRepository = UserRepository.getInstance();
     //加载更多的状态
     public MutableLiveData<Integer> loadStatus = new MutableLiveData<>();
     public MutableLiveData<List<GirlBean>> dataList = new MutableLiveData<>();
 
-    //-----------------------------------------------------------------
+    //----------------------------------------------------------
     private MutableLiveData<Integer> girlsPage = new MutableLiveData<>();
     //这种写法单向监听数据仓库数据变化，viewModel被销毁后不会对其产生影响
     public LiveData<List<GirlBean>> girlsList = Transformations.switchMap(girlsPage, page ->
@@ -29,13 +33,10 @@ public class GirlsViewModel extends BaseViewModel {
     //-----------------------------------------------------------------
 
 
-    public GirlsViewModel(@NonNull Application application) {
-        super(application);
-    }
-
+    //---------------------------写法二-------------------------------
     public void getDataList(int page) {
         userRepository.getGirls(this, page, 10);
-        // ---------------------
+        // ----------写法一------
         //        girlsPage.setValue(page);
         // ---------------------
     }
