@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
+import androidx.lifecycle.MutableLiveData;
 
 import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.activity.RegisterActivity;
@@ -27,11 +28,11 @@ import me.goldze.mvvmhabit.utils.ToastUtils;
 
 public class LoginViewModel extends BaseViewModel {
     //用户名的绑定
-    public ObservableField<String> userName = new ObservableField<>("");
+    public MutableLiveData<String> userName = new MutableLiveData<>();
     //密码的绑定
-    public ObservableField<String> password = new ObservableField<>("");
+    public MutableLiveData<String> password = new MutableLiveData<>();
     //用户名清除按钮的显示隐藏绑定
-    public ObservableInt clearBtnVisibility = new ObservableInt();
+    public MutableLiveData<Integer> clearBtnVisibility = new MutableLiveData<>();
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
 
@@ -49,7 +50,7 @@ public class LoginViewModel extends BaseViewModel {
     public BindingCommand clearUserNameOnClickCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            userName.set("");
+            userName.setValue("");
         }
     });
     //密码显示开关  (你可以尝试着狂按这个按钮,会发现它有防多次点击的功能)
@@ -65,9 +66,9 @@ public class LoginViewModel extends BaseViewModel {
         @Override
         public void call(Boolean hasFocus) {
             if (hasFocus) {
-                clearBtnVisibility.set(View.VISIBLE);
+                clearBtnVisibility.setValue(View.VISIBLE);
             } else {
-                clearBtnVisibility.set(View.INVISIBLE);
+                clearBtnVisibility.setValue(View.INVISIBLE);
             }
         }
     });
@@ -90,11 +91,11 @@ public class LoginViewModel extends BaseViewModel {
      * 网络模拟一个登陆操作
      **/
     private void login() {
-        if (TextUtils.isEmpty(userName.get())) {
+        if (TextUtils.isEmpty(userName.getValue())) {
             ToastUtils.showShort("请输入账号！");
             return;
         }
-        if (TextUtils.isEmpty(password.get())) {
+        if (TextUtils.isEmpty(password.getValue())) {
             ToastUtils.showShort("请输入密码！");
             return;
         }

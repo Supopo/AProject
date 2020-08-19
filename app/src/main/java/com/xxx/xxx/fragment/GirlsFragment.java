@@ -1,5 +1,6 @@
 package com.xxx.xxx.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.xxx.xxx.R;
 import com.xxx.xxx.BR;
+import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.GirlsAdapter;
+import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.databinding.FragmentGirlsBinding;
 import com.xxx.xxx.viewModel.GirlsViewModel;
 
@@ -107,12 +110,16 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
 
         //Item点击事件
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            Intent intent = new Intent();
+            intent.putExtra(Constant.PageTitle, mAdapter.getData().get(position).getTitle());
+            intent.putExtra(Constant.PageUrl, mAdapter.getData().get(position).getUrl());
+            intent.setClass(getActivity(), WebActivity.class);
+            startActivity(intent);
         });
 
 
-        //	子View点击事件
-        mAdapter.addChildClickViewIds(R.id.ll_item);
+        //	子View点击事件 当前Item点击失效是因为设置 ll_item
+//        mAdapter.addChildClickViewIds(R.id.ll_item);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
         });

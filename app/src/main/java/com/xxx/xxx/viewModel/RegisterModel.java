@@ -29,7 +29,7 @@ public class RegisterModel extends BaseViewModel {
     //绑定获取验证码
     public MutableLiveData<String> codeText = new MutableLiveData<>();
     //手机号清除按钮的显示隐藏绑定
-    public ObservableInt clearBtnVisibility = new ObservableInt();
+    public MutableLiveData<Integer> clearBtnVisibility = new MutableLiveData<>();
     private long lastTime;
 
 
@@ -43,9 +43,9 @@ public class RegisterModel extends BaseViewModel {
         @Override
         public void call(Boolean hasFocus) {
             if (hasFocus) {
-                clearBtnVisibility.set(View.VISIBLE);
+                clearBtnVisibility.setValue(View.VISIBLE);
             } else {
-                clearBtnVisibility.set(View.INVISIBLE);
+                clearBtnVisibility.setValue(View.INVISIBLE);
             }
         }
     });

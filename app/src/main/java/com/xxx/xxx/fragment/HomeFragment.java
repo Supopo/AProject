@@ -70,7 +70,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         });
         binding.banner.setBannerPageClickListener(((view, i) -> {
-            ToastUtils.showLong("点击了轮播图" + i);
             Intent intent = new Intent();
             intent.putExtra(Constant.PageTitle, banners.get(i).getTitle());
             intent.putExtra(Constant.PageUrl, banners.get(i).getUrl());

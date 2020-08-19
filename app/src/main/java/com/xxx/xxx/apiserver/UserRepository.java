@@ -1,5 +1,9 @@
 package com.xxx.xxx.apiserver;
 
+import android.util.Log;
+
+import androidx.lifecycle.MutableLiveData;
+
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.http.RetrofitClient;
@@ -86,6 +90,7 @@ public class UserRepository {
                 });
     }
 
+
     public void getGirls(GirlsViewModel viewModel, int page, int count) {
         userApi.getGirls(page, count)
                 .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
@@ -129,5 +134,41 @@ public class UserRepository {
                     }
                 });
     }
+
+    public MutableLiveData<List<GirlBean>> getGirls(int page) {
+        MutableLiveData<List<GirlBean>> girlsList = new MutableLiveData<>();
+        Log.e("--", "1");
+        userApi.getGirls(page, 10)
+                .compose(RxUtils.schedulersTransformer())  // 线程调度
+                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseResponse<List<GirlBean>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<GirlBean>> response) {
+                        if (response.getData() != null) {
+                            girlsList.setValue(response.getData());
+                            Log.e("--", "2");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        Log.e("supo", "3");
+        return girlsList;
+    }
+
 
 }

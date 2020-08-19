@@ -75,11 +75,11 @@ dependencies {
 ```
 或
 
-下载例子程序，在主项目app的build.gradle中依赖例子程序中的**mvvmhabit**：
+下载例子程序，在主项目app的build.gradle中依赖例子程序中的**LibMVVM**：
 ```gradle
 dependencies {	
     ...
-    implementation project(':mvvmhabit')
+    implementation project(':LibMVVM')
 }
 ```
 
@@ -109,7 +109,7 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 ```
 配置Application：
 
-继承**mvvmhabit**中的BaseApplication，或者调用
+继承**LibMVVM**中的BaseApplication，或者调用
 
 ```java
 BaseApplication.setApplication(this);
@@ -147,7 +147,7 @@ CaocConfig.Builder.create()
 <layout>
     <data>
         <variable
-            type="com.goldze.mvvmhabit.ui.login.LoginViewModel"
+            type="com.xxx.xxx.viewModel.LoginViewModel"
             name="viewModel"
         />
     </data>
@@ -224,13 +224,20 @@ BaseViewModel与BaseActivity通过LiveData来处理常用UI逻辑，即可在Vie
 在LoginViewModel中定义
 ```java
 //用户名的绑定
-public ObservableField<String> userName = new ObservableField<>("");
+public MutableLiveData<String> userName = new MutableLiveData<>();
+
+ //密码开关观察者
+public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
+
+SingleLiveEvent继承自MutableLiveData，区别是：注册的多个观察员，但只有一个将被通知。
+
+
 ```
 在用户名EditText标签中绑定
 ```xml
 android:text="@={viewModel.userName}"
 ```
-这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.set("")设置什么，输入框中就显示什么。
+这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.setValue("")设置什么，输入框中就显示什么。
 **注意：** @符号后面需要加=号才能达到双向绑定效果；userName需要是public的，不然viewModel无法找到它。
 
 点击事件绑定：
@@ -337,7 +344,7 @@ url是图片路径，这样绑定后，这个ImageView就会去显示这张图�
 ```xml
 binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
 ```
-> R文件需要在data标签中导入使用，如：`<import type="com.goldze.mvvmhabit.R" />`
+> R文件需要在data标签中导入使用，如：`<import type="com.xxx.xxx.R" />`
 
 BindingAdapter中的实现
 ```java
@@ -355,7 +362,7 @@ public static void setImageUri(ImageView imageView, String url, int placeholderR
 很简单就自定义了一个ImageView图片加载的绑定，学会这种方式，可自定义扩展。
 > 如果你对这些感兴趣，可以下载源码，在binding包中可以看到各类控件的绑定实现方式
 
-##### 2.2.4、RecyclerView绑定
+##### 2.2.4、RecyclerView绑定 
 > RecyclerView也是很常用的一种控件，传统的方式需要针对各种业务要写各种Adapter，如果你使用了mvvmhabit，则可大大简化这种工作量，从此告别setAdapter()。
 
 在ViewModel中定义：
@@ -587,6 +594,7 @@ RxBus.getDefault().post(object);
 ```
 #### 3.3.2、Messenger
 Messenger是一个轻量级全局的消息通信工具，在我们的复杂业务中，难免会出现一些交叉的业务，比如ViewModel与ViewModel之间需要有数据交换，这时候可以轻松地使用Messenger发送一个实体或一个空消息，将事件从一个ViewModel回调到另一个ViewModel中。
+最常用的场景例如：MainActivity的ViewModel和它的几个Fragment的ViewModel之间的数据交互。
 
 使用方法：
 

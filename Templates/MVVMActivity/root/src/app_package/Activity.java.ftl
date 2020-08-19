@@ -32,6 +32,8 @@ public class ${activityClass} extends BaseActivity<ActivityBaseBinding, ${viewMo
     public void initData() {
 		<#if creatAdapter>
 			initAdapter();
+		<#else>
+			viewModel.getDataList();
 		</#if>
     }
 
@@ -117,6 +119,12 @@ public class ${activityClass} extends BaseActivity<ActivityBaseBinding, ${viewMo
 		
 	    binding.rvContent.setLayoutManager(new LinearLayoutManager(this));
         binding.rvContent.setAdapter(mAdapter);
+
+        <#if hasLoadMore>
+        viewModel.getDataList(pageNum);
+        <#else>
+        viewModel.getDataList();
+        </#if>
 		
 		//Item点击事件
 		mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -124,7 +132,7 @@ public class ${activityClass} extends BaseActivity<ActivityBaseBinding, ${viewMo
         });
 		
 		
-		//	子View点击事件
+		//子View点击事件  当前Item点击失效是因为子View点击时间设置 ll_item之后覆盖了
         mAdapter.addChildClickViewIds(R.id.ll_item);
 		mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 		

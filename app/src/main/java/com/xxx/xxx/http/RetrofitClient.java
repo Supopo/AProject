@@ -69,7 +69,7 @@ public class RetrofitClient {
         }
 
         if (httpCacheDirectory == null) {
-            httpCacheDirectory = new File(mContext.getCacheDir(), "xxx_cache");
+            httpCacheDirectory = new File(mContext.getCacheDir(), "aproject_cache");
         }
 
         try {
