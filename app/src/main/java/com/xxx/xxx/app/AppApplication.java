@@ -1,5 +1,7 @@
 package com.xxx.xxx.app;
 
+import android.content.Context;
+
 import com.squareup.leakcanary.LeakCanary;
 
 import com.xxx.xxx.BuildConfig;
@@ -11,9 +13,16 @@ import me.goldze.mvvmhabit.utils.KLog;
 
 
 public class AppApplication extends BaseApplication {
+    public static Context mContext;
+
+    public static Context getContext() {
+        return mContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = getApplicationContext();
         //是否开启打印日志
         KLog.init(BuildConfig.DEBUG);
         //初始化全局异常崩溃

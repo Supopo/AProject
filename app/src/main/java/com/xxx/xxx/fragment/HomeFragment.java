@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.xxx.xxx.BR;
+import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
+import com.xxx.xxx.http.RetrofitClient;
 import com.xxx.xxx.viewModel.HomeViewModel;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 

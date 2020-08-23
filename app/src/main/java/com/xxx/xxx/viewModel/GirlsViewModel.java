@@ -8,8 +8,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.apiserver.UserRepository;
 import com.xxx.xxx.bean.GirlBean;
+import com.xxx.xxx.http.RetrofitClient;
 
 import java.util.List;
 
@@ -39,6 +41,7 @@ public class GirlsViewModel extends BaseViewModel {
         // ----------写法一------
         //        girlsPage.setValue(page);
         // ---------------------
+
     }
 
 }
