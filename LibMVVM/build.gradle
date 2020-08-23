@@ -74,4 +74,5 @@ dependencies {
 
     //QMUI小功能控件库
     api rootProject.ext.dependencies.qmui
+    api rootProject.ext.dependencies.fastjson
 }

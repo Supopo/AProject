@@ -4,6 +4,7 @@
     <#include "root://activities/common/common_globals.xml.ftl" />
 	<global id="creatAdapter" type="boolean" value="false" />
 	<global id="creatBean" type="boolean" value="false" />
+	<global id="creatListBean" type="boolean" value="false" />
 	<global id="hasRefresh" type="boolean" value="true" />
 	<global id="hasLoadMore" type="boolean" value="true" />
 </globals>

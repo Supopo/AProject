@@ -23,6 +23,12 @@
     <open file="${escapeXmlAttribute(srcOut)}/bean/${beanClass}.${ktOrJavaExt}"/>
 </#if>
 
+<#if creatAdapter && creatListBean>
+	<instantiate from="root/src/app_package/ListBean.${ktOrJavaExt}.ftl"
+                   to="${escapeXmlAttribute(srcOut)}/bean/${listBeanClass}.${ktOrJavaExt}" />
+    <open file="${escapeXmlAttribute(srcOut)}/bean/${listBeanClass}.${ktOrJavaExt}"/>
+</#if>
+
 <#if creatAdapter>
 	<instantiate from="root/src/app_package/Adapter.${ktOrJavaExt}.ftl"
                    to="${escapeXmlAttribute(srcOut)}/adapter/${adapterClass}.${ktOrJavaExt}" />

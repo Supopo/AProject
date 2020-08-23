@@ -59,6 +59,14 @@
         help="If true, will creat a bean class" />
 		
 	<parameter
+        id="creatListBean"
+        name="Creat List Bean"
+        type="boolean"
+        default="false"
+		visibility="creatAdapter"
+        help="If true, will creat a list bean class" />
+		
+	<parameter
         id="beanClass"
         name="Bean Name"
         type="string"
@@ -67,6 +75,16 @@
         default="XxxBean"
 		visibility="creatAdapter"
         help="The name of the bean class to create" />
+		
+	<parameter
+        id="listBeanClass"
+        name="List Bean Name"
+        type="string"
+        constraints="class|unique|nonempty"
+		suggest="${underscoreToCamelCase(classToResource(activityClass))}ListBean"
+        default="XxxListBean"
+		visibility="creatAdapter"
+        help="The name of the list bean class to create" />
 		
 	<parameter
         id="itemLayout"

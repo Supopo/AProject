@@ -64,7 +64,8 @@ ext {
             "butterknife"                          : "com.jakewharton:butterknife:8.6.0",
             "butterknife-compiler"                 : "com.jakewharton:butterknife-compiler:8.6.0",
             //QMUI小功能控件库
-            "qmui"                                 : "com.qmuiteam:qmui:2.0.0-alpha02"
+            "qmui"                                 : "com.qmuiteam:qmui:2.0.0-alpha02",
+            "fastjson"                             : "com.alibaba:fastjson:1.2.73",
     ]
 }
 

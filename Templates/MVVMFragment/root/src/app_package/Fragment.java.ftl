@@ -31,8 +31,11 @@ public class ${fragmentClass} extends BaseFragment<ActivityBaseBinding, ${viewMo
     public void initData() {
 		<#if creatAdapter>
 			initAdapter();
-		<#else>
-			viewModel.getDataList();
+			<#if hasLoadMore>
+			viewModel.getDataList(pageNum);
+			<#else>
+			 viewModel.getDataList();
+			</#if>
 		</#if>
     }
 
@@ -98,7 +101,7 @@ public class ${fragmentClass} extends BaseFragment<ActivityBaseBinding, ${viewMo
     }
 	
 	<#if creatAdapter>
-	public void initAdapter(){
+	private void initAdapter(){
 	    mAdapter = new ${adapterClass}(R.layout.${itemLayout});
 		<#if hasLoadMore>
         mLoadMore = mAdapter.getLoadMoreModule();//创建适配器.上拉加载
@@ -118,12 +121,12 @@ public class ${fragmentClass} extends BaseFragment<ActivityBaseBinding, ${viewMo
 		
 	    binding.rvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvContent.setAdapter(mAdapter);
-
-        <#if hasLoadMore>
+		
+		<#if hasLoadMore>
         viewModel.getDataList(pageNum);
-        <#else>
-        viewModel.getDataList();
-        </#if>
+		<#else>
+		viewModel.getDataList();
+		</#if>
 		
 		//Item点击事件
 		mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -131,12 +134,13 @@ public class ${fragmentClass} extends BaseFragment<ActivityBaseBinding, ${viewMo
         });
 		
 		
-		//子View点击事件  当前Item点击失效是因为子View点击时间设置 ll_item之后覆盖了
+		//	子View点击事件 当前Item点击失效是因为设置 ll_item 覆盖了
         mAdapter.addChildClickViewIds(R.id.ll_item);
 		mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 		
 		});
 	
+
 	}
 	</#if>
 }

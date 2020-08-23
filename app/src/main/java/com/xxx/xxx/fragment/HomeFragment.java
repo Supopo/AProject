@@ -3,7 +3,6 @@ package com.xxx.xxx.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
@@ -16,13 +15,11 @@ import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
-import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.utils.ToastUtils;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
