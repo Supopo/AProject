@@ -5,11 +5,9 @@ import androidx.databinding.DataBindingUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xxx.xxx.R;
 import com.xxx.xxx.bean.NewsBean;
 import com.xxx.xxx.databinding.ItemNewsBinding;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class NewsAdapter extends BaseQuickAdapter<NewsBean, BaseViewHolder> impl
 
     //局部刷新用的
     @Override
-    protected void convert(@NotNull BaseViewHolder helper, NewsBean item, @NotNull List<?> payloads) {
+    protected void convert( BaseViewHolder helper, NewsBean item,  List<?> payloads) {
         super.convert(helper, item, payloads);
         if (payloads.size() > 0 && payloads.get(0) instanceof Integer) {
             //不为空，即调用notifyItemChanged(position,payloads)后执行的，可以在这里获取payloads中的数据进行局部刷新

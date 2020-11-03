@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.databinding.ItemGirlsBinding;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class GirlsAdapter extends BaseQuickAdapter<GirlBean, BaseViewHolder> imp
 
     //局部刷新用的
     @Override
-    protected void convert(@NotNull BaseViewHolder helper, GirlBean item, @NotNull List<?> payloads) {
+    protected void convert( BaseViewHolder helper, GirlBean item,  List<?> payloads) {
         super.convert(helper, item, payloads);
         if (payloads.size() > 0 && payloads.get(0) instanceof Integer) {
             //不为空，即调用notifyItemChanged(position,payloads)后执行的，可以在这里获取payloads中的数据进行局部刷新
