@@ -2,10 +2,15 @@ package com.xxx.xxx.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +19,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
+import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
@@ -26,6 +32,8 @@ import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -58,6 +66,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         };
         //请求Banner
         viewModel.getBanners();
+
+        //设置展开、收缩TextView
+        binding.tvText.setShowMaxEms(8);
+        binding.tvText.setDefaultText("一二三四五六七八九十一二三四");
+
     }
 
     private void initViewPager() {
