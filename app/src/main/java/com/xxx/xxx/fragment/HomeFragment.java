@@ -3,20 +3,26 @@ package com.xxx.xxx.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.viewpager.widget.PagerAdapter;
 
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
-import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
-import com.xxx.xxx.http.RetrofitClient;
+import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
+import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
@@ -54,6 +60,55 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         viewModel.getBanners();
     }
 
+    private void initViewPager() {
+        //设置切换动画
+        binding.viewPager.setPageTransformer(true,
+                new CardTransformer(QMUIDisplayHelper.dp2px(getActivity(), 20)));
+        binding.viewPager.setAdapter(new PagerAdapter() {
+            @Override
+            public int getCount() {
+                //不设置banners.size是为了无线循环滑动
+                return Integer.MAX_VALUE;
+            }
+
+            @Override
+            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+                return view == object;
+            }
+
+            //返回要显示的条目内容
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_vpager, null);
+                ItemVpagerBinding vPagerBinding = DataBindingUtil.bind(view);
+
+                //手动设置当前展示View的偏移量，使前后View偏差，从而达到层叠效果
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) vPagerBinding.ivPager.getLayoutParams();
+                params.setMarginEnd(QMUIDisplayHelper.dp2px(getActivity(), 15));
+                vPagerBinding.ivPager.setLayoutParams(params);
+
+                //为了防止角标越界需要判断一下
+                if (position >= banners.size()) {
+                    vPagerBinding.setViewModel(banners.get(position % banners.size()));
+                } else {
+                    vPagerBinding.setViewModel(banners.get(position));
+                }
+
+                container.addView(view);
+                return view;
+            }
+
+            //销毁条目
+            @Override
+            public void destroyItem(ViewGroup container, int position, Object object) {
+                //object:刚才创建的对象，即要销毁的对象
+                container.removeView((View) object);
+            }
+        });
+        //设置预加载页数
+        binding.viewPager.setOffscreenPageLimit(2);
+    }
+
 
     //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
     @Override
@@ -66,6 +121,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 binding.banner.setPages(banners, mzHolderCreator);
                 //开始轮播
                 binding.banner.start();
+                //设置层叠滑动效果的ViewPager
+                initViewPager();
             }
         });
         binding.banner.setBannerPageClickListener(((view, i) -> {

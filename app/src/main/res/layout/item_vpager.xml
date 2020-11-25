@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <variable
+            name="viewModel"
+            type="com.xxx.xxx.bean.BannerBean" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rl_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            app:qmui_corner_radius="@dimen/dp_10"
+            app:qmui_border_color="@color/qmui_s_transparent"
+            android:id="@+id/iv_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            binding:url="@{viewModel.image}" />
+    </RelativeLayout>
+</layout>
