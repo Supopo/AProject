@@ -69,7 +69,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         //设置展开、收缩TextView
         binding.tvText.setShowMaxEms(8);
+        binding.tvText.setShowFontColor(getActivity().getResources().getColor(R.color.blue));
         binding.tvText.setDefaultText("一二三四五六七八九十一二三四");
+        binding.tvText.setOnClickListener(v -> {
+            Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
+        });
 
     }
 
