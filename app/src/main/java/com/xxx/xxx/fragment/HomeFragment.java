@@ -2,10 +2,6 @@ package com.xxx.xxx.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +15,20 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
-import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
+import com.xxx.xxx.adapter.TagsAdapter;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
+import com.xxx.xxx.widget.AutoLineLayoutManager;
 import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -43,6 +38,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private MZHolderCreator<BannerHolder> mzHolderCreator;
     private List<BannerBean> banners;
+    private TagsAdapter tagsAdapter;
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,13 +63,28 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         //请求Banner
         viewModel.getBanners();
 
+        viewModel.getTags();
+
         //设置展开、收缩TextView
         binding.tvText.setShowMaxEms(8);
         binding.tvText.setShowFontColor(getActivity().getResources().getColor(R.color.blue));
-        binding.tvText.setDefaultText("一二三四五六七八九十一二三四");
+        binding.tvText.setDefaultText("一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十");
         binding.tvText.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "点击了", Toast.LENGTH_SHORT).show();
         });
+
+        binding.tvText2.setShowMaxEms(8);
+        binding.tvText2.setDefaultText("一二三四五六七");
+        binding.tvText2.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
+
+        tagsAdapter = new TagsAdapter(R.layout.item_tags);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        binding.rvTag.setLayoutManager(layoutManager);
+
+        AutoLineLayoutManager autoLineLayoutManager = new AutoLineLayoutManager();
+        binding.rvTag.setLayoutManager(autoLineLayoutManager);
+        binding.rvTag.setAdapter(tagsAdapter);
 
     }
 
@@ -149,6 +160,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             intent.setClass(getActivity(), WebActivity.class);
             startActivity(intent);
         }));
+
+        viewModel.tags.observe(getActivity(), tags -> {
+            if (tags != null) {
+                tagsAdapter.setNewInstance(tags);
+            }
+        });
     }
 
 
