@@ -59,6 +59,7 @@ public class AutoLineLayoutManager extends RecyclerView.LayoutManager {
         for (int i = 0; i < getItemCount(); i++) {
             View view = recycler.getViewForPosition(i);
             addView(view);
+            //测量view
             measureChild(view, 0, 0);
 
             //测量当前view的宽和高
@@ -70,19 +71,20 @@ public class AutoLineLayoutManager extends RecyclerView.LayoutManager {
 
             //如果超过RecyclerView的宽度，则需要换行
             if (curLineWidth > rvWidth) {
-
+                //换行
                 if (lastLineMaxHeight == 0) {
                     lastLineMaxHeight = height;
                 }
                 //换行之后的高度
                 curLineTop += lastLineMaxHeight;
-                //绘制
+                //装饰放置
                 layoutDecorated(view, 0, curLineTop, width, curLineTop + height );
                 //换行，重置累计宽度
                 curLineWidth = width;
                 lastLineMaxHeight = height;
             }else {
                 //不需要换行
+                //装饰放置
                 layoutDecorated(view, curLineWidth - width, curLineTop, curLineWidth, curLineTop + height);
                 //比较当前行item的最大高度
                 lastLineMaxHeight = Math.max(lastLineMaxHeight, height);
