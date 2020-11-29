@@ -54,6 +54,19 @@
                 android:layout_height="wrap_content"
                 android:overScrollMode="never" />
 
+
+            <com.xxx.xxx.widget.CircleImageView
+                android:id="@+id/civ_image"
+                url="@{viewModel.image1}"
+                app:civ_radius="@dimen/dp_10"
+                app:border_width="@dimen/dp_1"
+                app:border_corlor="@color/blue"
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/dp_15"
+                android:scaleType="centerCrop" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

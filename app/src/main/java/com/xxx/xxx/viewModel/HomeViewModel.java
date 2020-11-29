@@ -18,6 +18,8 @@ public class HomeViewModel extends BaseViewModel {
     //轮播图数据
     public MutableLiveData<List<BannerBean>> banners = new MutableLiveData<>();
     public MutableLiveData<List<NewsBean>> tags = new MutableLiveData<>();
+    public MutableLiveData<String> image1 = new MutableLiveData<>();
+
 
     private UserRepository userRepository = UserRepository.getInstance();
 

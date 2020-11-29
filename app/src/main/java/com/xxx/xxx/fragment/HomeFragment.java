@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
@@ -78,13 +79,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.tvText2.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
         tagsAdapter = new TagsAdapter(R.layout.item_tags);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        binding.rvTag.setLayoutManager(layoutManager);
+        //        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        //        binding.rvTag.setLayoutManager(layoutManager);
 
         AutoLineLayoutManager autoLineLayoutManager = new AutoLineLayoutManager();
         binding.rvTag.setLayoutManager(autoLineLayoutManager);
         binding.rvTag.setAdapter(tagsAdapter);
+
+        viewModel.image1.setValue("http://gank.io/images/aebca647b3054757afd0e54d83e0628e");
 
     }
 
