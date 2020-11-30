@@ -119,6 +119,7 @@ public class CircleImageView extends AppCompatImageView {
         Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, mMatrix, true);
 
         //新建图层
+        //将原图层的内容保存，使得图形图层是和图片资源图层进行绘制操作
         int layerId = canvas.saveLayer(0, 0, getWidth(), getHeight(), null, Canvas.ALL_SAVE_FLAG);
 
         //在图层上绘制目标图形
@@ -133,10 +134,12 @@ public class CircleImageView extends AppCompatImageView {
 
 
         //设置图层图像合成方式
+        //绘制自定义形状图片是通过将自定义图形图层和图片资源图层的内容使用PorterDuffXfermode绘制合并而成
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         mPaint.setStyle(Paint.Style.FILL);
         //绘制图像
         canvas.drawBitmap(newBitmap, (viewWidth - newBitmap.getWidth()) / 2, (viewHeight - newBitmap.getHeight()) / 2, mPaint);
+        //在图层绘制结束之后再使用canvas.restoreToCount恢复保存的原图层内容
         canvas.restoreToCount(layerId);
 
         if (strokeWidth > 0) {
