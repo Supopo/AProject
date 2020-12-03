@@ -2,9 +2,11 @@ package com.xxx.xxx.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -88,6 +90,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.rvTag.setAdapter(tagsAdapter);
 
         viewModel.image1.setValue("http://gank.io/images/aebca647b3054757afd0e54d83e0628e");
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.popup_bottom, null);
+        PopupWindow popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //外部点击取消
+        popupWindow.setOutsideTouchable(true);
+
+        binding.civImage.setOnClickListener(lis -> {
+            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        });
 
     }
 

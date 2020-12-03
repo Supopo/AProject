@@ -1,12 +1,16 @@
 package com.xxx.xxx.fragment;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -119,9 +123,37 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
 
 
         //	子View点击事件 当前Item点击失效是因为设置 ll_item
-//        mAdapter.addChildClickViewIds(R.id.ll_item);
+        //        mAdapter.addChildClickViewIds(R.id.ll_item);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
+        });
+
+        binding.rvContent.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mRvScrollY = 0; // 列表滑动距离
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mRvScrollY += dy;
+
+                //向上滑动时候
+                if (dy < 0) {
+                    binding.tvTop.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvTop.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        binding.tvTop.setOnClickListener(lis -> {
+//            binding.rvContent.scrollToPosition(0);
+            //带滚动动画
+            binding.rvContent.smoothScrollToPosition(0);
         });
     }
 }
