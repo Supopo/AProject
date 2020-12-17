@@ -1,7 +1,6 @@
 package com.xxx.xxx.fragment;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,22 +8,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.xxx.xxx.R;
 import com.xxx.xxx.BR;
+import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.GirlsAdapter;
 import com.xxx.xxx.app.Constant;
+import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.databinding.FragmentGirlsBinding;
 import com.xxx.xxx.viewModel.GirlsViewModel;
+import com.xxx.xxx.widget.SpeacesItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.databinding.ActivityBaseBinding;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
 public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewModel> {
@@ -69,6 +72,18 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         //往adapter里面加载数据
         viewModel.dataList.observe(this, dataList -> {
             if (dataList != null) {
+                //                GirlBean girlBean = new GirlBean();
+                //                girlBean.setUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1194131577,2954769920&fm=26&gp=0.jpg");
+                //                dataList.add(girlBean);
+                //
+                //                GirlBean girlBean1 = new GirlBean();
+                //                girlBean1.setUrl("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3777670169,44660894&fm=26&gp=0.jpg");
+                //                dataList.add(girlBean1);
+                //
+                //                GirlBean girlBean2 = new GirlBean();
+                //                girlBean2.setUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1608115727500&di=d916618939552f2f81fa1570628b34bc&imgtype=0&src=http%3A%2F%2Fimg.ewebweb.com%2Fuploads%2F20191010%2F17%2F1570700137-yMcXQuisRr.jpg");
+                //                dataList.add(girlBean2);
+
                 if (pageNum == 1) {
                     mAdapter.setNewInstance(dataList);
                     if (dataList.size() == 0) {
@@ -108,7 +123,15 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
             }
         });
 
-        binding.rvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //        binding.rvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //瀑布流
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        //防止Item切换
+        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        //瀑布流这样会出现错误
+        binding.rvContent.addItemDecoration(new SpeacesItemDecoration(getActivity(), 10));
+        binding.rvContent.setLayoutManager(manager);
         binding.rvContent.setAdapter(mAdapter);
         viewModel.getDataList(pageNum);
 
@@ -151,7 +174,7 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         });
 
         binding.tvTop.setOnClickListener(lis -> {
-//            binding.rvContent.scrollToPosition(0);
+            //            binding.rvContent.scrollToPosition(0);
             //带滚动动画
             binding.rvContent.smoothScrollToPosition(0);
         });

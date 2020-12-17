@@ -89,7 +89,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.rvTag.setLayoutManager(autoLineLayoutManager);
         binding.rvTag.setAdapter(tagsAdapter);
 
-        viewModel.image1.setValue("http://gank.io/images/aebca647b3054757afd0e54d83e0628e");
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.popup_bottom, null);
         PopupWindow popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

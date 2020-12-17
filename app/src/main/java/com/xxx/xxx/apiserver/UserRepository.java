@@ -94,7 +94,7 @@ public class UserRepository {
 
     public void getGirls(GirlsViewModel viewModel, int page, int count) {
         viewModel.showDialog();
-        RetrofitClient.execute(userApi.getGirls(page, count),new CustomObserver<BaseResponse<List<GirlBean>>>() {
+        RetrofitClient.execute(userApi.getGirls(page, count), new CustomObserver<BaseResponse<List<GirlBean>>>() {
 
             @Override
             protected void dismissDialog() {
@@ -104,33 +104,38 @@ public class UserRepository {
             @Override
             public void onSuccess(BaseResponse<List<GirlBean>> data) {
                 viewModel.dataList.postValue(data.getData());
+                if (data.getData().size() > 0) {
+                    viewModel.loadStatus.postValue(1);
+                } else {
+                    viewModel.loadStatus.postValue(0);
+                }
             }
 
         });
 
-//        userApi.getGirls(page, count)
-//                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
-//                .compose(RxUtils.schedulersTransformer())  // 线程调度
-//                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
-//                .doOnSubscribe(new Consumer<Disposable>() {
-//                    @Override
-//                    public void accept(Disposable disposable) throws Exception {
-//                        viewModel.showDialog("正在捕获妹子");
-//                    }
-//                })
-//                .subscribe(new CustomObserver<BaseResponse<List<GirlBean>>>() {
-//
-//                    @Override
-//                    protected void dismissDialog() {
-//                        viewModel.dismissDialog();
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(BaseResponse<List<GirlBean>> data) {
-//                        viewModel.dataList.postValue(data.getData());
-//                    }
-//
-//                });
+        //        userApi.getGirls(page, count)
+        //                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider())) // 请求与View周期同步
+        //                .compose(RxUtils.schedulersTransformer())  // 线程调度
+        //                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+        //                .doOnSubscribe(new Consumer<Disposable>() {
+        //                    @Override
+        //                    public void accept(Disposable disposable) throws Exception {
+        //                        viewModel.showDialog("正在捕获妹子");
+        //                    }
+        //                })
+        //                .subscribe(new CustomObserver<BaseResponse<List<GirlBean>>>() {
+        //
+        //                    @Override
+        //                    protected void dismissDialog() {
+        //                        viewModel.dismissDialog();
+        //                    }
+        //
+        //                    @Override
+        //                    public void onSuccess(BaseResponse<List<GirlBean>> data) {
+        //                        viewModel.dataList.postValue(data.getData());
+        //                    }
+        //
+        //                });
     }
 
     public MutableLiveData<List<GirlBean>> getGirls(int page) {
@@ -164,7 +169,7 @@ public class UserRepository {
                     }
                 });
 
-        Log.e("supo", "3");
+        Log.e("--", "3");
         return girlsList;
     }
 

@@ -18,7 +18,7 @@ public class HomeViewModel extends BaseViewModel {
     //轮播图数据
     public MutableLiveData<List<BannerBean>> banners = new MutableLiveData<>();
     public MutableLiveData<List<NewsBean>> tags = new MutableLiveData<>();
-    public MutableLiveData<String> image1 = new MutableLiveData<>();
+    public String image1 = "http://gank.io/images/aebca647b3054757afd0e54d83e0628e";
 
 
     private UserRepository userRepository = UserRepository.getInstance();

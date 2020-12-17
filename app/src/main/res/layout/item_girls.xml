@@ -18,9 +18,10 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/tv_girls"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
-            android:scaleType="center"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             binding:url="@{viewModel.url}" />
 
 

@@ -30,6 +30,7 @@ public class GirlsViewModel extends BaseViewModel {
     //----------------------------------------------------------
     private MutableLiveData<Integer> girlsPage = new MutableLiveData<>();
     //这种写法单向监听数据仓库数据变化，viewModel被销毁后不会对其产生影响
+    //目前没完善，还没有判断加载完成或者加载完毕。
     public LiveData<List<GirlBean>> girlsList = Transformations.switchMap(girlsPage, page ->
             userRepository.getGirls(page));
     //-----------------------------------------------------------------
