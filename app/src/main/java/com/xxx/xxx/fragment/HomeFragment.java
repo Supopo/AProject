@@ -1,5 +1,6 @@
 package com.xxx.xxx.fragment;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -33,7 +34,9 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {

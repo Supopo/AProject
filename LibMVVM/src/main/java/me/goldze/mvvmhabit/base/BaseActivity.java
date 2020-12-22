@@ -1,12 +1,19 @@
 package me.goldze.mvvmhabit.base;
 
+import android.app.Activity;
 import android.content.Intent;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.DisplayCutout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,7 +24,9 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
+import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.FragmentActivity;
@@ -27,8 +36,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -54,10 +66,59 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     public RelativeLayout rlTitle;
     public TextView tvTitle, tvRight;
     public ImageView ivLeft, ivRight;
+    public RxPermissions permissions;
+
+
+    //解决 8.0系统 设置竖屏和透明状态栏 冲突问题
+    private boolean isTranslucentOrFloating() {
+        boolean isTranslucentOrFloating = false;
+        try {
+            int[] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
+            final TypedArray ta = obtainStyledAttributes(styleableRes);
+            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
+            m.setAccessible(true);
+            isTranslucentOrFloating = (boolean) m.invoke(null, ta);
+            m.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isTranslucentOrFloating;
+    }
+
+    private boolean fixOrientation() {
+        try {
+            Field field = Activity.class.getDeclaredField("mActivityInfo");
+            field.setAccessible(true);
+            ActivityInfo o = (ActivityInfo) field.get(this);
+            o.screenOrientation = -1;
+            field.setAccessible(false);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    //设置方向时候如果透明则不执行
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            return;
+        }
+        super.setRequestedOrientation(requestedOrientation);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //解决 8.0系统 设置竖屏和透明状态栏 冲突问题
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            boolean result = fixOrientation();
+        }
         super.onCreate(savedInstanceState);
+
+        permissions = new RxPermissions(this);
         //页面接受的参数方法
         initParam();
         //私有的初始化Databinding和ViewModel方法
@@ -348,12 +409,73 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         return ViewModelProviders.of(activity).get(cls);
     }
 
-    //设置全屏
-    public void setFullScreen() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+    //设置透明状态栏，页面延伸
+    public void setStatusBarTransparent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View decorView = getWindow().getDecorView();
+            decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                    WindowInsets defaultInsets = v.onApplyWindowInsets(insets);
+                    return defaultInsets.replaceSystemWindowInsets(
+                            defaultInsets.getSystemWindowInsetLeft(),
+                            0,
+                            defaultInsets.getSystemWindowInsetRight(),
+                            defaultInsets.getSystemWindowInsetBottom());
+                }
+            });
+            ViewCompat.requestApplyInsets(decorView);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
+        }
     }
 
-    //6.0以上设置颜色
+    //设置全屏（隐藏状态栏）
+    //如果有刘海先要在手机里面设置显示刘海内容
+    //如果有的手机开启全屏之后顶部有彩色条，那是因为手机的全屏设置没有设置该app
+    public void setFullScreen() {
+        Window window = getWindow();
+        //设置全屏
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //如果有刘海先要在手机里面设置显示刘海内容
+        if (Build.VERSION.SDK_INT >= 28) {
+            WindowManager.LayoutParams lp = window.getAttributes();
+            //设置内容扩展到刘海位置
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(lp);
+
+            // View.SYSTEM_UI_FLAG_FULLSCREEN: 状态栏隐藏
+            // View.SYSTEM_UI_FLAG_HIDE_NAVIGATION: 导航栏隐藏
+            // View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: 视图延伸至状态栏区域，状态栏上浮于视图之上
+            int flags = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+            int visibility = window.getDecorView().getSystemUiVisibility();
+            visibility |= flags; //追加沉浸式设置
+            window.getDecorView().setSystemUiVisibility(visibility);
+        }
+    }
+
+
+
+    /**
+     * Android 6.0 以上设置状态栏颜色
+     */
+    private void setLightMode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            // 设置状态栏底色白色
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(Color.WHITE);
+
+            // 设置状态栏字体黑色
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+    }
+
+    /**
+     * Android 6.0 以上设置状态栏颜色
+     */
     public void setStatusBar(@ColorInt int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -372,8 +494,15 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
 
     }
 
-    //判断是不是亮色
+    /**
+     * 判断颜色是不是亮色
+     *
+     * @param color
+     * @return
+     * @from https://stackoverflow.com/questions/24260853/check-if-color-is-dark-or-light-in-android
+     */
     private boolean isLightColor(@ColorInt int color) {
         return ColorUtils.calculateLuminance(color) >= 0.5;
     }
+
 }

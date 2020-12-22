@@ -1,10 +1,12 @@
 package com.xxx.xxx.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.xxx.xxx.BR;
 import com.xxx.xxx.MainActivity;
@@ -64,13 +66,26 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
             return;
         }
 
-        //设置全屏
-        setFullScreen();
+
     }
 
     //页面数据初始化方法
     @Override
     public void initData() {
+
+        //设置全屏，隐藏状态栏
+        //如果有刘海先要在手机的应用设置显示刘海区域内容
+        //如果有的手机开启全屏之后顶部有彩色条，那是因为手机的全屏设置没有设置该app
+        setFullScreen();
+        //状态栏透明的全屏效果
+//        setStatusBarTransparent();
+
+
+        if (Build.VERSION.SDK_INT >= 28) {
+            WindowManager.LayoutParams params = getWindow().getAttributes();
+            params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(params);
+        }
 
         rlTitle.setVisibility(View.GONE);
         binding.tvJump.setText("跳过 " + recLen);
