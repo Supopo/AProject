@@ -72,17 +72,6 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         //往adapter里面加载数据
         viewModel.dataList.observe(this, dataList -> {
             if (dataList != null) {
-                //                GirlBean girlBean = new GirlBean();
-                //                girlBean.setUrl("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1194131577,2954769920&fm=26&gp=0.jpg");
-                //                dataList.add(girlBean);
-                //
-                //                GirlBean girlBean1 = new GirlBean();
-                //                girlBean1.setUrl("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3777670169,44660894&fm=26&gp=0.jpg");
-                //                dataList.add(girlBean1);
-                //
-                //                GirlBean girlBean2 = new GirlBean();
-                //                girlBean2.setUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1608115727500&di=d916618939552f2f81fa1570628b34bc&imgtype=0&src=http%3A%2F%2Fimg.ewebweb.com%2Fuploads%2F20191010%2F17%2F1570700137-yMcXQuisRr.jpg");
-                //                dataList.add(girlBean2);
 
                 if (pageNum == 1) {
                     //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
@@ -130,7 +119,7 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         //防止Item切换
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        //瀑布流这样会出现错误
+        //设置间距
         binding.rvContent.addItemDecoration(new SpeacesItemDecoration(getActivity(), 10));
         binding.rvContent.setLayoutManager(manager);
         binding.rvContent.setAdapter(mAdapter);
