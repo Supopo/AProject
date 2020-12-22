@@ -3,15 +3,12 @@ package com.xxx.xxx.viewModel;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.apiserver.UserRepository;
 import com.xxx.xxx.bean.GirlBean;
-import com.xxx.xxx.http.RetrofitClient;
 
 import java.util.List;
 

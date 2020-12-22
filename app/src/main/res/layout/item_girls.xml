@@ -10,18 +10,20 @@
             type="com.xxx.xxx.bean.GirlBean" />
     </data>
 
+<!--    随机背景颜色-->
+<!--    android:background="@{viewModel.placeholderRes}"-->
+
     <LinearLayout
         android:id="@+id/ll_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{viewModel.placeholderRes}"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/tv_girls"
+            android:id="@+id/iv_girls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             binding:url="@{viewModel.url}" />
 
 

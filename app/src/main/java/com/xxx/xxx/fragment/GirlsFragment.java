@@ -85,7 +85,8 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
                 //                dataList.add(girlBean2);
 
                 if (pageNum == 1) {
-                    mAdapter.setNewInstance(dataList);
+                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
+                    mAdapter.setList(dataList);
                     if (dataList.size() == 0) {
                         //创建适配器.空布局，没有数据时候默认展示的
                         mAdapter.setEmptyView(R.layout.list_empty);
@@ -133,6 +134,8 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         binding.rvContent.addItemDecoration(new SpeacesItemDecoration(getActivity(), 10));
         binding.rvContent.setLayoutManager(manager);
         binding.rvContent.setAdapter(mAdapter);
+        //防止刷新跳动
+        binding.rvContent.setItemAnimator(null);
         viewModel.getDataList(pageNum);
 
         //Item点击事件

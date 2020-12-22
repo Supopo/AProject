@@ -69,7 +69,7 @@ public class ${activityClass} extends BaseActivity<ActivityBaseBinding, ${viewMo
             if (dataList != null) {
 			<#if hasLoadMore>
                 if (pageNum == 1) {
-                    mAdapter.setNewInstance(dataList);
+                    mAdapter.setList(dataList);
                     if (dataList.size() == 0) {
                         //创建适配器.空布局，没有数据时候默认展示的
                        mAdapter.setEmptyView(R.layout.list_empty);
@@ -78,7 +78,7 @@ public class ${activityClass} extends BaseActivity<ActivityBaseBinding, ${viewMo
                     mAdapter.addData(dataList);
                 }
 			<#else>	
-				 mAdapter.setNewInstance(dataList);
+				 mAdapter.setList(dataList);
                     if (dataList.size() == 0) {
                         //创建适配器.空布局，没有数据时候默认展示的
                        mAdapter.setEmptyView(R.layout.list_empty);

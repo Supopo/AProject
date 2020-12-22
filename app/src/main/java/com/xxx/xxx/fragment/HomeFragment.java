@@ -176,7 +176,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         viewModel.tags.observe(getActivity(), tags -> {
             if (tags != null) {
-                tagsAdapter.setNewInstance(tags);
+                tagsAdapter.setList(tags);
             }
         });
     }
