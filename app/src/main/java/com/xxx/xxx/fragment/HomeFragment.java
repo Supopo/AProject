@@ -1,7 +1,7 @@
 package com.xxx.xxx.fragment;
 
-import android.Manifest;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
@@ -34,9 +36,7 @@ import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.utils.ToastUtils;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
@@ -83,6 +83,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.tvText2.setDefaultText("一二三四五六七");
         binding.tvText2.setTextColor(getActivity().getResources().getColor(R.color.colorPrimary));
 
+
+        //标签流内容
         tagsAdapter = new TagsAdapter(R.layout.item_tags);
         //        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -93,6 +95,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.rvTag.setAdapter(tagsAdapter);
 
 
+        //PopupWindow内容
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.popup_bottom, null);
         PopupWindow popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         //外部点击取消
@@ -102,6 +105,54 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         });
 
+
+        //TabLayout内容
+        String[] titles = {"标签1", "标签2", "标签3", "标签4"};
+        for (String title : titles) {
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(title));
+        }
+
+        TabLayout.Tab tabAt = binding.tabLayout.getTabAt(0);
+        setSelectTab(tabAt);
+
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                setSelectTab(tab);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View customView = tab.getCustomView();
+                if (customView == null) {
+                    tab.setCustomView(R.layout.tab_text_layout);
+                }
+                TextView tvTab = tab.getCustomView().findViewById(android.R.id.text1);
+                tvTab.setCompoundDrawables(null, null, null, null);
+                tvTab.setTextAppearance(R.style.TabLayoutTextUnSelected);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void setSelectTab(TabLayout.Tab tab) {
+        View customView = tab.getCustomView();
+        if (customView == null) {
+            tab.setCustomView(R.layout.tab_text_layout);
+        }
+        TextView tvTab = tab.getCustomView().findViewById(android.R.id.text1);
+
+        Drawable drawable = getResources().getDrawable(R.drawable.tab_layout_line);
+        //切记这一行一定要设置
+        drawable.setBounds( 0, 0, drawable.getMinimumWidth(),drawable.getMinimumHeight());
+
+        tvTab.setCompoundDrawables(null, null, null, drawable);
+        tvTab.setCompoundDrawablePadding(-16);
+        tvTab.setTextAppearance(R.style.TabLayoutTextSelected);
     }
 
     private void initViewPager() {

@@ -70,9 +70,12 @@ dependencies {
 
     //LibMVVM
     implementation project(path: ':LibMVVM')
-
     //QMUI小功能控件库
     api rootProject.ext.dependencies.qmui
+    //轮播图
+    api rootProject.ext.dependencies.banner
+    //BaseQuickAdapter 最新版本 latest.integration 但是使用这个有些系统库可能下载不下来
+    api rootProject.ext.dependencies.adapter
 
     //内存泄漏测试 debugImplementation和releaseImplementation都要有
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
@@ -81,9 +84,6 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
 
 
-    //BaseQuickAdapter 最新版本 latest.integration 但是使用这个有些系统库可能下载不下来
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:latest.integration'
 
-    //轮播图
-    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+
 }
