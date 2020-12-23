@@ -51,8 +51,6 @@ import com.xxx.xxx.R;
  */
 public class CircleImageView extends AppCompatImageView {
 
-    private Paint mPaint;
-    private Matrix mMatrix;
     private int strokeWidth;//边框宽度
     private int strokeColor;//边框颜色
     private int radius;//设置了radius说明是圆角矩形
@@ -75,17 +73,9 @@ public class CircleImageView extends AppCompatImageView {
         strokeColor = typedArray.getColor(R.styleable.CircleImageView_border_corlor, Color.BLACK);
         radius = typedArray.getDimensionPixelSize(R.styleable.CircleImageView_civ_radius, 0);
         typedArray.recycle();
-        init();
-
-    }
-
-    //进行画笔初始化
-    private void init() {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);//给画笔设置抗锯齿
-        mMatrix = new Matrix();
         //该方法千万别放到onDraw()方法里面调用，否则会不停的重绘的，因为该方法调用了invalidate() 方法
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);//禁用硬加速
+
     }
 
     //重写onDraw()方法获取BitmapDrawable进行处理
@@ -104,6 +94,10 @@ public class CircleImageView extends AppCompatImageView {
     }
 
     private void drawRoundByXfermode(Canvas canvas, Bitmap bitmap) {
+        Paint mPaint = new Paint();
+        mPaint.setAntiAlias(true);//给画笔设置抗锯齿
+        Matrix mMatrix = new Matrix();
+
 
         int bitmapWidth = bitmap.getWidth();
         int bitmapHeight = bitmap.getHeight();

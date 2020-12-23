@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,7 +147,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         Drawable drawable = getResources().getDrawable(R.drawable.tab_layout_line);
         //切记这一行一定要设置
-        drawable.setBounds( 0, 0, drawable.getMinimumWidth(),drawable.getMinimumHeight());
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
 
         tvTab.setCompoundDrawables(null, null, null, drawable);
         tvTab.setCompoundDrawablePadding(-16);

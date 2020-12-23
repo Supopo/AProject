@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import com.xxx.xxx.databinding.ActivityMainBinding;
 import com.xxx.xxx.fragment.GirlsFragment;
 import com.xxx.xxx.fragment.HomeFragment;
