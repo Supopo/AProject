@@ -19,12 +19,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:resizeableActivity="false"
+        android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
-        <!--表示可以明文访问网络http android:usesCleartextTraffic="true"-->
+
+        <!--        设置是否可以分屏-->
+        <!--        这个属性在你target到Android N后，android:resizeableActivity的默认值就是true-->
+        <!--        android:resizeableActivity="false"-->
 
 
-        <!-- 避免10.0出现http联网问题 -->
+        <!--        10.0无法保持图片 需要的权限-->
+        <!--        android:requestLegacyExternalStorage="true"-->
+
+        <!--        避免10.0出现http联网问题 -->
+        <!--        表示可以明文访问网络http android:usesCleartextTraffic="true" -->
+
+        <activity
+            android:name=".activity.ShowPicsActivity"
+            android:screenOrientation="portrait" />
+
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

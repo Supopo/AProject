@@ -3,6 +3,7 @@ package com.xxx.xxx.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
+import com.xxx.xxx.activity.ShowPicsActivity;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
 import com.xxx.xxx.adapter.TagsAdapter;
@@ -33,6 +35,7 @@ import com.xxx.xxx.widget.AutoLineLayoutManager;
 import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
+import java.io.Serializable;
 import java.util.List;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
@@ -85,9 +88,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         //标签流内容
         tagsAdapter = new TagsAdapter(R.layout.item_tags);
-        //        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        //        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        //        binding.rvTag.setLayoutManager(layoutManager);
 
         AutoLineLayoutManager autoLineLayoutManager = new AutoLineLayoutManager();
         binding.rvTag.setLayoutManager(autoLineLayoutManager);
@@ -187,6 +187,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 } else {
                     vPagerBinding.setViewModel(banners.get(position));
                 }
+
+
+                vPagerBinding.ivPager.setOnClickListener(lis -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("imgs", (Serializable) banners);
+                    intent.setClass(getActivity(), ShowPicsActivity.class);
+                    startActivity(intent);
+                });
 
                 container.addView(view);
                 return view;

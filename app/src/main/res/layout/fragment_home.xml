@@ -63,7 +63,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dp_15"
                 android:scaleType="centerCrop"
-                app:border_corlor="@color/white"
+                app:border_corlor="@color/gray"
                 app:border_width="0.5dp" />
 
 

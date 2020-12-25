@@ -2,6 +2,8 @@ package com.xxx.xxx.bean;
 
 import com.xxx.xxx.utils.ColorsUtils;
 
+import java.io.Serializable;
+
 /**
  * //                       _ooOoo_
  * //                      o8888888o
@@ -30,10 +32,14 @@ import com.xxx.xxx.utils.ColorsUtils;
  * 描    述: 轮播图实体类
  * =====================================================
  */
-public class BannerBean {
+public class BannerBean implements Serializable {
     private String image;
     private String title;
     private String url;
+
+    public BannerBean(String image) {
+        this.image = image;
+    }
 
     public int getPlaceholderRes() {
         return ColorsUtils.randomColor();

@@ -44,6 +44,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void initData() {
+        setStatusBarTransparent();
+        rlTitle.setVisibility(View.GONE);
         ivLeft.setVisibility(View.INVISIBLE);
         //初始化Fragment
         initFragment();
