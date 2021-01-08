@@ -20,6 +20,7 @@ import com.xxx.xxx.databinding.ActivityMainBinding;
 import com.xxx.xxx.fragment.GirlsFragment;
 import com.xxx.xxx.fragment.HomeFragment;
 import com.xxx.xxx.fragment.NewsFragment;
+import com.xxx.xxx.fragment.TestFragment;
 import com.xxx.xxx.viewModel.MainViewModel;
 
 import java.lang.reflect.Field;
@@ -58,7 +59,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mFragments.add(new HomeFragment());
         mFragments.add(new GirlsFragment());
         mFragments.add(new NewsFragment());
-        mFragments.add(new NewsFragment());
+        mFragments.add(new TestFragment());
 
         //默认选中第一个
         commitAllowingStateLoss(0);

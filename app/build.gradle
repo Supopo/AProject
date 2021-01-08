@@ -83,6 +83,8 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
 
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    implementation 'com.leon:lfilepickerlibrary:1.8.0'
 
 
 
