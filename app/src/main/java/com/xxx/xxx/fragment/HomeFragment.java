@@ -3,6 +3,9 @@ package com.xxx.xxx.fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,6 +42,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
+import me.goldze.mvvmhabit.utils.ToastUtils;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
@@ -136,7 +140,78 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
             }
         });
+
+        //子线程往主线程发送消息2
+        binding.btn1.setOnClickListener(lis -> {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                Log.e("--", "点击事件是在主线程");
+            } else {
+                Log.e("--", "点击事件是在子线程");
+            }
+
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    if (Looper.myLooper() != Looper.getMainLooper()) {
+                        Log.e("--", "子线程发消息");
+                    }
+                    mHandler.sendEmptyMessage(0);
+                }
+            };
+            thread.start();
+        });
+
+
+        //主线程往子线程发送消息1
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                //初始化
+                Looper.prepare();
+                mHandler2 = new Handler() {
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+                        if (Looper.myLooper() != Looper.getMainLooper()) {
+                            Log.e("--", "子线程收消息");
+                        }
+                        //处理完成后手动关闭
+                        mHandler2.getLooper().quit();
+                    }
+                };
+                //开始轮循
+                Looper.loop();
+            }
+        };
+        thread.start();
+        //主线程往子线程发送消息2
+        binding.btn2.setOnClickListener(lis -> {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                Log.e("--", "主线程发消息");
+            }
+            mHandler2.sendEmptyMessage(1);
+        });
+
     }
+
+    private Handler mHandler2;
+
+    //子线程往主线程发送消息1
+    //在主线程中创建Handler
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                Log.e("--", "主线程收消息");
+            }
+
+            ToastUtils.showLong(msg.toString());
+        }
+    };
 
     private void setSelectTab(TabLayout.Tab tab) {
         View customView = tab.getCustomView();
