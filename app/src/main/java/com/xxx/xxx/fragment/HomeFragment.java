@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
@@ -164,28 +165,45 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
 
         //主线程往子线程发送消息1
-        Thread thread = new Thread() {
+//        Thread thread = new Thread() {
+//            @Override
+//            public void run() {
+//                super.run();
+//                //初始化
+//                Looper.prepare();
+//                mHandler2 = new Handler() {
+//                    @Override
+//                    public void handleMessage(@NonNull Message msg) {
+//                        super.handleMessage(msg);
+//                        if (Looper.myLooper() != Looper.getMainLooper()) {
+//                            Log.e("--", "子线程收消息");
+//                        }
+//                        //处理完成后手动关闭
+//                        mHandler2.getLooper().quit();
+//                    }
+//                };
+//                //开始轮循
+//                Looper.loop();
+//            }
+//        };
+//        thread.start();
+
+
+        //主线程往子线程发送消息1 利用HandlerThread
+        HandlerThread handlerThread = new HandlerThread("handlerThread");
+        handlerThread.start();
+
+        mHandler2 = new Handler(handlerThread.getLooper()) {
             @Override
-            public void run() {
-                super.run();
-                //初始化
-                Looper.prepare();
-                mHandler2 = new Handler() {
-                    @Override
-                    public void handleMessage(@NonNull Message msg) {
-                        super.handleMessage(msg);
-                        if (Looper.myLooper() != Looper.getMainLooper()) {
-                            Log.e("--", "子线程收消息");
-                        }
-                        //处理完成后手动关闭
-                        mHandler2.getLooper().quit();
-                    }
-                };
-                //开始轮循
-                Looper.loop();
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                if (Looper.myLooper() != Looper.getMainLooper()) {
+                    Log.e("--", "子线程收消息");
+                }
             }
         };
-        thread.start();
+
+
         //主线程往子线程发送消息2
         binding.btn2.setOnClickListener(lis -> {
             if (Looper.myLooper() == Looper.getMainLooper()) {
