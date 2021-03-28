@@ -5,12 +5,8 @@ import androidx.databinding.DataBindingUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xxx.xxx.bean.NewsBean;
 import com.xxx.xxx.bean.TestBean;
-import com.xxx.xxx.databinding.ItemNewsBinding;
 import com.xxx.xxx.databinding.ItemTestBinding;
-
-import java.util.List;
 
 
 public class TestAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder> implements LoadMoreModule {

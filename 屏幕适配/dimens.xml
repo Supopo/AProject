@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="login_btn_height">46.0dip</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
 
     <!-- dp value -->
     <dimen name="dp_m_60">-60.0dp</dimen>
@@ -858,5 +857,6 @@
     <dimen name="sp_46">46.0sp</dimen>
     <dimen name="sp_47">47.0sp</dimen>
     <dimen name="sp_48">48.0sp</dimen>
+
 
 </resources>

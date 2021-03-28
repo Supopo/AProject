@@ -1,0 +1,17 @@
+ScreenMatch实现SmallWidth屏幕适配
+
+参考文档
+https://zhuanlan.zhihu.com/p/144487134
+https://blog.csdn.net/qq_21072223/article/details/86624751
+https://blog.csdn.net/duanchuanzhi/article/details/81065011?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&dist_request_id=1328740.25128.16168999850016139&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.control
+
+ScreenMatch为AndroidStudio插件包，导入插件。相比较官方的比较完善。
+
+安装完插件，生成配置之前，可以先设置。
+全局搜索base_dp，在screenMatch.properties中有对应的全局搜索base_dp和sw值。
+base_dp值按照设计师的图dp设置即可。
+
+copy一份示例例配置到res。
+配置完成，在app文件包上右键ScreenMatch即可。
+
+
