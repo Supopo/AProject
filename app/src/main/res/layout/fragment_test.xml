@@ -23,18 +23,26 @@
             android:layout_height="@dimen/dp_45"
             android:layout_alignParentBottom="true"
             android:text="保存" />
+
         <Button
-            android:layout_above="@id/btn_save"
             android:id="@+id/btn_get"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_45"
+            android:layout_above="@id/btn_save"
             android:text="导入" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <Button
+            android:id="@+id/btn_word"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:layout_above="@id/btn_get"
+            android:text="导出Word" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/btn_word"
             android:layout_marginTop="@dimen/dp_50" />
 
 

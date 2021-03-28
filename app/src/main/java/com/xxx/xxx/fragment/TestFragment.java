@@ -6,21 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.leon.lfilepickerlibrary.LFilePicker;
-import com.xxx.xxx.MainActivity;
-import com.xxx.xxx.R;
 import com.xxx.xxx.BR;
+import com.xxx.xxx.R;
 import com.xxx.xxx.adapter.TestAdapter;
 import com.xxx.xxx.bean.TestBean;
 import com.xxx.xxx.databinding.FragmentTestBinding;
@@ -32,14 +25,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import me.goldze.mvvmhabit.base.BaseFragment;
-import me.goldze.mvvmhabit.databinding.ActivityBaseBinding;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -76,7 +67,12 @@ public class TestFragment extends BaseFragment<FragmentTestBinding, TestViewMode
             createExcel("测试文件");
         });
 
+        binding.btnWord.setOnClickListener(lis -> {
+
+        });
+
     }
+
 
 
     //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册

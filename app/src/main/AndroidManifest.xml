@@ -70,6 +70,19 @@
         <activity
             android:name=".activity.WebActivity"
             android:screenOrientation="portrait" />
+
+        <service android:name=".test.MyService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote">
+
+            <intent-filter>
+                <action android:name="com.xxx.xxx.test.MyService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+
     </application>
 
 </manifest>
