@@ -8,7 +8,8 @@ https://blog.csdn.net/duanchuanzhi/article/details/81065011?utm_medium=distribut
 ScreenMatch为AndroidStudio插件包，导入插件。相比较官方的比较完善。
 
 安装完插件，生成配置之前，可以先设置。
-全局搜索base_dp，在screenMatch.properties中有对应的全局搜索base_dp和sw值。
+将screenMatch.properties放在Project根目录下即可
+在screenMatch.properties中有对应的全局搜索base_dp和sw值。
 base_dp值按照设计师的图dp设置即可。
 
 copy一份示例例配置到res。
