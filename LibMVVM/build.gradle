@@ -20,6 +20,10 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+    //test
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //support
     api rootProject.ext.support["support-v4"]
     api rootProject.ext.support["appcompat-v7"]
@@ -75,4 +79,7 @@ dependencies {
     //QMUI小功能控件库
     api rootProject.ext.dependencies.qmui
     api rootProject.ext.dependencies.fastjson
+
+
+
 }

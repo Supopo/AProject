@@ -84,8 +84,12 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.annotation:annotation:1.0.0'
+    //本地化测试
+    //Required -- JUnit 4 framework
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
+    //仪器化测试
+    //Google UI测试框架
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //内存泄漏测试 debugImplementation和releaseImplementation都要有

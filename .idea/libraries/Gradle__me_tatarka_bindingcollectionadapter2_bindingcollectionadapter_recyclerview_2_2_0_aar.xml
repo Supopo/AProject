@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0@aar">
+    <ANNOTATIONS>
+      <root url="jar://J:/Tools/Android/Gradle/caches/transforms-2/files-2.1/ba1d77f7e448571c3dc3cb2a9d8231e0/jetified-bindingcollectionadapter-recyclerview-2.2.0/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://J:/Tools/Android/Gradle/caches/transforms-2/files-2.1/ba1d77f7e448571c3dc3cb2a9d8231e0/jetified-bindingcollectionadapter-recyclerview-2.2.0/jars/classes.jar!/" />
+      <root url="file://J:/Tools/Android/Gradle/caches/transforms-2/files-2.1/ba1d77f7e448571c3dc3cb2a9d8231e0/jetified-bindingcollectionadapter-recyclerview-2.2.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://J:/Tools/Android/Gradle/caches/modules-2/files-2.1/me.tatarka.bindingcollectionadapter2/bindingcollectionadapter-recyclerview/2.2.0/ce48dcc031ad0d3c0b43e290ea73a6b672811aa1/bindingcollectionadapter-recyclerview-2.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://J:/Tools/Android/Gradle/caches/modules-2/files-2.1/me.tatarka.bindingcollectionadapter2/bindingcollectionadapter-recyclerview/2.2.0/bca99cd7775ac50026a246cf1c7715e3491e65e7/bindingcollectionadapter-recyclerview-2.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
