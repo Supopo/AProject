@@ -19,6 +19,7 @@ public class GirlsViewModel extends BaseViewModel {
         super(application);
     }
 
+    //网络请求仓库
     private UserRepository userRepository = UserRepository.getInstance();
     //加载更多的状态
     public MutableLiveData<Integer> loadStatus = new MutableLiveData<>();

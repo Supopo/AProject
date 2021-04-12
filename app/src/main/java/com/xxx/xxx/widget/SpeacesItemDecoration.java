@@ -10,32 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
- * //                       _ooOoo_
- * //                      o8888888o
- * //                      88" . "88
- * //                      (| -_- |)
- * //                       O\ = /O
- * //                   ____/`---'\____
- * //                 .   ' \\| |// `.
- * //                  / \\||| : |||// \
- * //                / _||||| -:- |||||- \
- * //                  | | \\\ - /// | |
- * //                | \_| ''\---/'' | |
- * //                 \ .-\__ `-` ___/-. /
- * //              ______`. .' /--.--\ `. . __
- * //           ."" '< `.___\_<|>_/___.' >'"".
- * //          | | : `- \`.;`\ _ /`;.`/ - ` : | |
- * //            \ \ `-. \_ __\ /__ _/ .-` / /
- * //    ======`-.____`-.___\_____/___.-`____.-'======
- * //                       `=---='
- * //
- * //    .............................................
- * //             佛祖保佑             永无BUG
- * =====================================================
- * 作    者：Supo
- * 日    期：2020/12/17
- * 描    述: RecyclerView间距设置，用法rv.addItemDecoration
- * =====================================================
+ * RecyclerView间距设置，用法rv.addItemDecoration
  */
 public class SpeacesItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpeace;

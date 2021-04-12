@@ -1,9 +1,11 @@
 package com.xxx.xxx.apiserver;
 
 
+import android.content.Intent;
 import android.net.ParseException;
 
 import com.google.gson.JsonParseException;
+import com.xxx.xxx.activity.LoginActivity;
 import com.xxx.xxx.app.AppApplication;
 
 import org.json.JSONException;
@@ -16,36 +18,12 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.http.NetworkUtil;
+import me.goldze.mvvmhabit.utils.SPUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 import retrofit2.HttpException;
 
 /**
- * //                       _ooOoo_
- * //                      o8888888o
- * //                      88" . "88
- * //                      (| -_- |)
- * //                       O\ = /O
- * //                   ____/`---'\____
- * //                 .   ' \\| |// `.
- * //                  / \\||| : |||// \
- * //                / _||||| -:- |||||- \
- * //                  | | \\\ - /// | |
- * //                | \_| ''\---/'' | |
- * //                 \ .-\__ `-` ___/-. /
- * //              ______`. .' /--.--\ `. . __
- * //           ."" '< `.___\_<|>_/___.' >'"".
- * //          | | : `- \`.;`\ _ /`;.`/ - ` : | |
- * //            \ \ `-. \_ __\ /__ _/ .-` / /
- * //    ======`-.____`-.___\_____/___.-`____.-'======
- * //                       `=---='
- * //
- * //    .............................................
- * //             佛祖保佑             永无BUG
- * =====================================================
- * 作    者：Supo
- * 日    期：2020/7/29
- * 描    述: 自定义Observer
- * =====================================================
+ * 自定义Observer
  */
 public abstract class CustomObserver<T extends BaseResponse> implements Observer<T> {
     private String msg;
@@ -60,16 +38,15 @@ public abstract class CustomObserver<T extends BaseResponse> implements Observer
 
     @Override
     public void onNext(T t) {
-        //判断登陆超时，token过期等
-        //        if (t.getStatus() == 408) {
-        //            SPUtils.getInstance().clear();
-        //            Intent intent = new Intent();
-        //            intent.setClass(AppApplication.getContext(), LoginActivity.class);
-        //            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        //            AppApplication.getContext().startActivity(intent);
-        //        }
         if (t.isOk()) {
             onSuccess(t);
+        } else if (t.getStatus() == CodeTable.NET_RES_OVERDUE) {
+            //登录过期
+            SPUtils.getInstance().clear();
+            Intent intent = new Intent();
+            intent.setClass(AppApplication.getContext(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            AppApplication.getContext().startActivity(intent);
         }
     }
 

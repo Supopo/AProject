@@ -8,10 +8,11 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -106,7 +107,29 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         popupWindow.setOutsideTouchable(true);
 
         binding.civImage.setOnClickListener(lis -> {
-            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+//            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+
+
+            Animation sss = AnimationUtils.loadAnimation(getActivity(),R.anim.anim_enter);
+            Animation sss2 = AnimationUtils.loadAnimation(getActivity(),R.anim.anim_exit);
+            binding.civImage.startAnimation(sss);
+            sss.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    binding.civImage.startAnimation(sss2);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
         });
 
 

@@ -841,7 +841,7 @@ CAP#1从?的捕获扩展Object
 
 ## License
 
-    Copyright 2020 Supo
+    Copyright 2020 xxx
  
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

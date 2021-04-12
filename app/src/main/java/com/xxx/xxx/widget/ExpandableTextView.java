@@ -2,7 +2,6 @@ package com.xxx.xxx.widget;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.provider.CalendarContract;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -13,43 +12,12 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.xxx.xxx.R;
 
-/**
- * //                       _ooOoo_
- * //                      o8888888o
- * //                      88" . "88
- * //                      (| -_- |)
- * //                       O\ = /O
- * //                   ____/`---'\____
- * //                 .   ' \\| |// `.
- * //                  / \\||| : |||// \
- * //                / _||||| -:- |||||- \
- * //                  | | \\\ - /// | |
- * //                | \_| ''\---/'' | |
- * //                 \ .-\__ `-` ___/-. /
- * //              ______`. .' /--.--\ `. . __
- * //           ."" '< `.___\_<|>_/___.' >'"".
- * //          | | : `- \`.;`\ _ /`;.`/ - ` : | |
- * //            \ \ `-. \_ __\ /__ _/ .-` / /
- * //    ======`-.____`-.___\_____/___.-`____.-'======
- * //                       `=---='
- * //
- * //    .............................................
- * //             佛祖保佑             永无BUG
- * =====================================================
- * 作    者：Supo
- * 日    期：2020/11/25
- * 描    述: 自定义展开/收缩TextView
- * =====================================================
- */
+
 public class ExpandableTextView extends AppCompatTextView {
     private boolean needExpand;//是否需要展开
     private boolean isExpand;//展开状态
