@@ -22,6 +22,7 @@ public final class ViewAdapter {
             //使用Glide框架加载图片
             Glide.with(imageView.getContext())
                     .load(url)
+                    .thumbnail(0.3f)
                     .apply(new RequestOptions().placeholder(placeholderRes))
                     .into(imageView);
         }

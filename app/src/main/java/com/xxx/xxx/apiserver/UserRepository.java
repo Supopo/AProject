@@ -1,24 +1,14 @@
 package com.xxx.xxx.apiserver;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 
-import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.http.RetrofitClient;
-import com.xxx.xxx.viewModel.GirlsViewModel;
-import com.xxx.xxx.viewModel.HomeViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.observers.DisposableObserver;
 import me.goldze.mvvmhabit.http.BaseResponse;
-import me.goldze.mvvmhabit.utils.RxUtils;
 
 /**
  * 网络请求仓库
