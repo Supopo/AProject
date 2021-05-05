@@ -75,6 +75,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         };
         //请求Banner
+        showDialog();
         viewModel.getBanners();
 
         viewModel.getTags();
@@ -107,11 +108,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         popupWindow.setOutsideTouchable(true);
 
         binding.civImage.setOnClickListener(lis -> {
-//            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            //            popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
 
-            Animation sss = AnimationUtils.loadAnimation(getActivity(),R.anim.anim_enter);
-            Animation sss2 = AnimationUtils.loadAnimation(getActivity(),R.anim.anim_exit);
+            Animation sss = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_enter);
+            Animation sss2 = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_exit);
             binding.civImage.startAnimation(sss);
             sss.setAnimationListener(new Animation.AnimationListener() {
                 @Override
@@ -188,28 +189,28 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
 
         //主线程往子线程发送消息1
-//        Thread thread = new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                //初始化
-//                Looper.prepare();
-//                mHandler2 = new Handler() {
-//                    @Override
-//                    public void handleMessage(@NonNull Message msg) {
-//                        super.handleMessage(msg);
-//                        if (Looper.myLooper() != Looper.getMainLooper()) {
-//                            Log.e("--", "子线程收消息");
-//                        }
-//                        //处理完成后手动关闭
-//                        mHandler2.getLooper().quit();
-//                    }
-//                };
-//                //开始轮循
-//                Looper.loop();
-//            }
-//        };
-//        thread.start();
+        //        Thread thread = new Thread() {
+        //            @Override
+        //            public void run() {
+        //                super.run();
+        //                //初始化
+        //                Looper.prepare();
+        //                mHandler2 = new Handler() {
+        //                    @Override
+        //                    public void handleMessage(@NonNull Message msg) {
+        //                        super.handleMessage(msg);
+        //                        if (Looper.myLooper() != Looper.getMainLooper()) {
+        //                            Log.e("--", "子线程收消息");
+        //                        }
+        //                        //处理完成后手动关闭
+        //                        mHandler2.getLooper().quit();
+        //                    }
+        //                };
+        //                //开始轮循
+        //                Looper.loop();
+        //            }
+        //        };
+        //        thread.start();
 
 
         //主线程往子线程发送消息1 利用HandlerThread
@@ -331,6 +332,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
     @Override
     public void initViewObservable() {
+        viewModel.disDialog.observe(getActivity(), disDialog -> {
+            if (disDialog != null && disDialog) {
+                dismissDialog();
+            }
+        });
         //轮播图数据回调
         viewModel.banners.observe(getActivity(), banners -> {
             if (banners != null) {

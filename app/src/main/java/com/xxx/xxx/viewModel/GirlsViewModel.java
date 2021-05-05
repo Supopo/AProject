@@ -21,26 +21,11 @@ public class GirlsViewModel extends BaseViewModel {
 
     //网络请求仓库
     private UserRepository userRepository = UserRepository.getInstance();
-    //加载更多的状态
-    public MutableLiveData<Integer> loadStatus = new MutableLiveData<>();
+    public MutableLiveData<Boolean> disDialog = new MutableLiveData<>();
     public MutableLiveData<List<GirlBean>> dataList = new MutableLiveData<>();
 
-    //----------------------------------------------------------
-    private MutableLiveData<Integer> girlsPage = new MutableLiveData<>();
-    //这种写法单向监听数据仓库数据变化，viewModel被销毁后不会对其产生影响
-    //目前没完善，还没有判断加载完成或者加载完毕。
-    public LiveData<List<GirlBean>> girlsList = Transformations.switchMap(girlsPage, page ->
-            userRepository.getGirls(page));
-    //-----------------------------------------------------------------
-
-
-    //---------------------------写法二-------------------------------
     public void getDataList(int page) {
-        userRepository.getGirls(this, page, 10);
-        // ----------写法一------
-        //        girlsPage.setValue(page);
-        // ---------------------
-
+        userRepository.getGirls(disDialog,dataList, page, 10);
     }
 
 }

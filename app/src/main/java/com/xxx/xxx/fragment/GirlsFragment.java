@@ -73,27 +73,31 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         viewModel.dataList.observe(this, dataList -> {
             if (dataList != null) {
 
-                if (pageNum == 1) {
-                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
-                    mAdapter.setList(dataList);
-                    if (dataList.size() == 0) {
+                if (dataList.size() == 0) {
+                    mLoadMore.loadMoreEnd(true);
+                    if (pageNum == 1) {
                         //创建适配器.空布局，没有数据时候默认展示的
                         mAdapter.setEmptyView(R.layout.list_empty);
                     }
+                } else {
+                    mLoadMore.loadMoreComplete();
+                }
+
+                if (pageNum == 1) {
+                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
+                    mAdapter.setList(dataList);
                 } else {
                     mAdapter.addData(dataList);
                 }
             }
         });
 
-        //根据下一页的数据来判断是加载完成了还是加载结束
-        viewModel.loadStatus.observe(this, status -> {
-            if (status == 0) {
-                mLoadMore.loadMoreEnd(true);
-            } else if (status == 1) {
-                mLoadMore.loadMoreComplete();
+        viewModel.disDialog.observe(this, disDialog -> {
+            if (disDialog != null && disDialog) {
+                dismissDialog();
             }
         });
+
 
     }
 
@@ -125,6 +129,8 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, GirlsViewM
         binding.rvContent.setAdapter(mAdapter);
         //防止刷新跳动
         binding.rvContent.setItemAnimator(null);
+
+        showDialog();
         viewModel.getDataList(pageNum);
 
         //Item点击事件
