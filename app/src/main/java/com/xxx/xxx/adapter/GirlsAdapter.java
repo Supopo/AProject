@@ -1,8 +1,6 @@
 package com.xxx.xxx.adapter;
 
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -11,7 +9,6 @@ import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.databinding.ItemGirlsBinding;
-
 
 import java.util.List;
 
