@@ -25,6 +25,7 @@ public class GirlsViewModel extends BaseViewModel {
     public MutableLiveData<List<GirlBean>> dataList = new MutableLiveData<>();
 
     public void getDataList(int page) {
+        //请参考getBanners
         userRepository.getGirls(disDialog, dataList, page, 10);
     }
 

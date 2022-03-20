@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.google.android.material.tabs.TabLayout;
@@ -31,11 +32,13 @@ import com.xxx.xxx.activity.ShowPicsActivity;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.BannerHolder;
 import com.xxx.xxx.adapter.TagsAdapter;
+import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
+import com.xxx.xxx.viewModel.LoginViewModel;
 import com.xxx.xxx.widget.AutoLineLayoutManager;
 import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
@@ -62,6 +65,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public int initVariableId() {
         return BR.viewModel;
+    }
+
+    @Override
+    public HomeViewModel initViewModel() {
+        //注意需要现在AppViewModelFactory的create方法声明
+        //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
+        return ViewModelProviders.of(this, factory).get(HomeViewModel.class);
     }
 
     //页面数据初始化方法

@@ -7,9 +7,11 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
+import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.databinding.ActivityLoginBinding;
 import com.xxx.xxx.viewModel.LoginViewModel;
 
@@ -30,6 +32,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public int initVariableId() {
         return BR.viewModel;
     }
+
+    @Override
+    public LoginViewModel initViewModel() {
+        //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getApplication());
+        return ViewModelProviders.of(this, factory).get(LoginViewModel.class);
+    }
+
 
     @Override
     public void initData() {

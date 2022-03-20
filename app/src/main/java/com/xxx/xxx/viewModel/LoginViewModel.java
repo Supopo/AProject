@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.activity.RegisterActivity;
+import com.xxx.xxx.apiserver.DemoRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,18 +27,22 @@ import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 
-public class LoginViewModel extends BaseViewModel {
+public class LoginViewModel extends BaseViewModel<DemoRepository> {
     //用户名的绑定
     public MutableLiveData<String> userName = new MutableLiveData<>();
     //密码的绑定
     public MutableLiveData<String> password = new MutableLiveData<>();
+
     //用户名清除按钮的显示隐藏绑定
     public MutableLiveData<Integer> clearBtnVisibility = new MutableLiveData<>();
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
 
-    public LoginViewModel(@NonNull Application application) {
-        super(application);
+    public LoginViewModel(@NonNull Application application, DemoRepository repository) {
+        super(application, repository);
+        //从本地取得数据绑定到View层
+        userName.setValue(model.getUserName());
+        password.setValue(model.getPassword());
     }
 
     public class UIChangeObservable {
@@ -99,9 +104,8 @@ public class LoginViewModel extends BaseViewModel {
             ToastUtils.showShort("请输入密码！");
             return;
         }
-        Observable<Object> login = Observable.just(new Object()).delay(2, TimeUnit.SECONDS); //延迟2秒
         //RaJava模拟登录
-        addSubscribe(login
+        addSubscribe(model.login()
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -114,8 +118,9 @@ public class LoginViewModel extends BaseViewModel {
                     public void accept(Object o) throws Exception {
                         dismissDialog();
                         //保存账号密码
-
-                        //进入MainActivity页面
+                        model.saveUserName(userName.getValue());
+                        model.savePassword(password.getValue());
+                        //进入DemoActivity页面
                         startActivity(MainActivity.class);
                         //关闭页面
                         finish();

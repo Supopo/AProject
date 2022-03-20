@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -14,6 +15,7 @@ import com.xxx.xxx.R;
 import com.xxx.xxx.databinding.ActivitySplashBinding;
 import com.xxx.xxx.viewModel.SplashViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -101,7 +103,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     }
 
     private void toNext() {
-        startActivity(MainActivity.class);
+        startActivity(LoginActivity.class);
         finish();
     }
 
@@ -115,5 +117,4 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
             }
         });
     }
-
 }
