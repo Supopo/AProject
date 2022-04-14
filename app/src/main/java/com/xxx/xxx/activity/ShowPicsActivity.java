@@ -120,7 +120,7 @@ public class ShowPicsActivity extends BaseActivity<ActivityShowPicsBinding, Show
                             .subscribe(granted -> {
                                 if (granted) {
                                     //保存到相册
-                                    DonwloadSaveImg.donwloadImg(ShowPicsActivity.this, list.get(position).getImage());
+                                    DonwloadSaveImg.donwloadImg(ShowPicsActivity.this, list.get(position).getImagePath());
                                 } else {
                                     ToastUtils.showShort("访问权限已拒绝");
                                 }

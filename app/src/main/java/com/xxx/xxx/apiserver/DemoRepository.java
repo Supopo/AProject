@@ -15,6 +15,7 @@ import me.goldze.mvvmhabit.http.BaseResponse;
 
 /**
  * Created by Suuu on 2022/3/20.
+ * 网络数据/本地数据仓库
  */
 public class DemoRepository extends BaseModel implements HttpDataSource, LocalDataSource {
     private volatile static DemoRepository INSTANCE = null;

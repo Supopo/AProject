@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 
 public interface ApiServer {
-    @GET("banners")
+    @GET("/banner/json")
     Observable<BaseResponse<List<BannerBean>>> getBanners();
 
     @GET("data/category/Girl/type/Girl/page/{page}/count/{count}")

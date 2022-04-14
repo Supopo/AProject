@@ -40,7 +40,7 @@ public abstract class CustomObserver<T extends BaseResponse> implements Observer
     public void onNext(T t) {
         if (t.isOk()) {
             onSuccess(t);
-        } else if (t.getStatus() == CodeTable.NET_RES_OVERDUE) {
+        } else if (t.getStatus() == CodeTable.LOGIN_INVALID) {
             //登录过期
             SPUtils.getInstance().clear();
             Intent intent = new Intent();

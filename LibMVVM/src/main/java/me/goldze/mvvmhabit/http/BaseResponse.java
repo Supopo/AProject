@@ -4,16 +4,17 @@ package me.goldze.mvvmhabit.http;
  * 该类仅供参考，实际业务返回的固定字段, 根据需求来定义，
  */
 public class BaseResponse<T> {
-    private int status;
-    private String message;
     private T data;
+    private int errorCode;
+    private String errorMsg;
+
 
     public int getStatus() {
-        return status;
+        return errorCode;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.errorCode = status;
     }
 
 
@@ -25,15 +26,16 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
+    //TODO 根据自己情况而定
     public boolean isOk() {
-        return status == 100;
+        return errorCode == 0;
     }
 
     public String getMessage() {
-        return message;
+        return errorMsg;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.errorMsg = message;
     }
 }

@@ -27,7 +27,7 @@ public class HomeViewModel extends BaseViewModel<DemoRepository> {
     public MutableLiveData<Boolean> disDialog = new MutableLiveData<>();
     public MutableLiveData<List<BannerBean>> banners = new MutableLiveData<>();
     public MutableLiveData<List<NewsBean>> tags = new MutableLiveData<>();
-    public String image1 = "http://gank.io/images/aebca647b3054757afd0e54d83e0628e";
+    public String image1 = "https://www.wanandroid.com/blogimgs/42da12d8-de56-4439-b40c-eab66c227a4b.png";
 
 
     private UserRepository userRepository = UserRepository.getInstance();

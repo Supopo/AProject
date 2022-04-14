@@ -289,6 +289,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     //    }
 
     public void showDialog(String title) {
+        if (dialog != null && dialog.isShowing()) {
+            return;
+        }
         dialog = new QMUITipDialog.Builder(this)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord(TextUtils.isEmpty(title) ? "请稍后" : title)
@@ -297,6 +300,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     }
 
     public void showDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            return;
+        }
         dialog = new QMUITipDialog.Builder(this)
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("请稍后")
@@ -454,7 +460,6 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             window.getDecorView().setSystemUiVisibility(visibility);
         }
     }
-
 
 
     /**
