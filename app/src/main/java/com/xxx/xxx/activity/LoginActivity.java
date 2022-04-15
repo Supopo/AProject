@@ -1,5 +1,6 @@
 package com.xxx.xxx.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -45,6 +46,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void initData() {
         super.initData();
         rlTitle.setVisibility(View.GONE);
+        setStatusBar(Color.WHITE);
     }
 
     @Override

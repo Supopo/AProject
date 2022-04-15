@@ -80,7 +80,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         //如果有的手机开启全屏之后顶部有彩色条，那是因为手机的全屏设置没有设置该app
         setFullScreen();
         //状态栏透明的全屏效果
-//        setStatusBarTransparent();
+        setStatusBarTransparent();
 
 
         if (Build.VERSION.SDK_INT >= 28) {

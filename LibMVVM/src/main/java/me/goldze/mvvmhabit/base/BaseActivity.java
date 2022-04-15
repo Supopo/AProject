@@ -116,6 +116,9 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
             boolean result = fixOrientation();
         }
+
+        setStatusBarTransparent();
+
         super.onCreate(savedInstanceState);
 
         permissions = new RxPermissions(this);
@@ -416,29 +419,12 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
     }
 
 
-    //设置透明状态栏，页面延伸
-    public void setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            View decorView = getWindow().getDecorView();
-            decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-                @Override
-                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                    WindowInsets defaultInsets = v.onApplyWindowInsets(insets);
-                    return defaultInsets.replaceSystemWindowInsets(
-                            defaultInsets.getSystemWindowInsetLeft(),
-                            0,
-                            defaultInsets.getSystemWindowInsetRight(),
-                            defaultInsets.getSystemWindowInsetBottom());
-                }
-            });
-            ViewCompat.requestApplyInsets(decorView);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
-        }
-    }
 
-    //设置全屏（隐藏状态栏）
-    //如果有刘海先要在手机里面设置显示刘海内容
-    //如果有的手机开启全屏之后顶部有彩色条，那是因为手机的全屏设置没有设置该app
+    /**
+     * 设置全屏（隐藏状态栏）
+     * 如果有刘海先要在手机里面设置显示刘海内容
+     * 如果有的手机开启全屏之后顶部有彩色条，那是因为手机的全屏设置没有设置该app
+     */
     public void setFullScreen() {
         Window window = getWindow();
         //设置全屏
@@ -461,20 +447,25 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         }
     }
 
-
     /**
-     * Android 6.0 以上设置状态栏颜色
+     * 设置透明状态栏，页面延伸
      */
-    private void setLightMode() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            // 设置状态栏底色白色
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(Color.WHITE);
-
-            // 设置状态栏字体黑色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    public void setStatusBarTransparent() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View decorView = getWindow().getDecorView();
+            decorView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                    WindowInsets defaultInsets = v.onApplyWindowInsets(insets);
+                    return defaultInsets.replaceSystemWindowInsets(
+                            defaultInsets.getSystemWindowInsetLeft(),
+                            0,
+                            defaultInsets.getSystemWindowInsetRight(),
+                            defaultInsets.getSystemWindowInsetBottom());
+                }
+            });
+            ViewCompat.requestApplyInsets(decorView);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent));
         }
     }
 
