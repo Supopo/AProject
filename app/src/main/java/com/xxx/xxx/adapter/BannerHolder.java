@@ -11,6 +11,7 @@ import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.ItemBannerBinding;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+//轮播图Holder
 public class BannerHolder implements MZViewHolder<BannerBean> {
     private ItemBannerBinding bannerBinding;
 

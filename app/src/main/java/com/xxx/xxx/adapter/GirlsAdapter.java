@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.xxx.xxx.bean.ArticleBean;
 import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.databinding.ItemGirlsBinding;
 

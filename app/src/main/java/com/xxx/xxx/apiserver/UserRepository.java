@@ -2,8 +2,9 @@ package com.xxx.xxx.apiserver;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.xxx.xxx.bean.ArticleBean;
 import com.xxx.xxx.bean.BannerBean;
-import com.xxx.xxx.bean.GirlBean;
+import com.xxx.xxx.bean.BaseListBean;
 import com.xxx.xxx.http.RetrofitClient;
 
 import java.util.List;
@@ -42,8 +43,8 @@ public class UserRepository {
     }
 
 
-    public void getGirls(MutableLiveData<Boolean> disDialog, MutableLiveData<List<GirlBean>> dataList, int page, int count) {
-        RetrofitClient.execute(userApi.getGirls(page, count), new CustomObserver<BaseResponse<List<GirlBean>>>() {
+    public void getArticles(MutableLiveData<Boolean> disDialog, MutableLiveData<BaseListBean<List<ArticleBean>>> dataList, int page, int count) {
+        RetrofitClient.execute(userApi.getArticles(page), new CustomObserver<BaseResponse<BaseListBean<List<ArticleBean>>>>() {
 
             @Override
             protected void dismissDialog() {
@@ -51,7 +52,7 @@ public class UserRepository {
             }
 
             @Override
-            public void onSuccess(BaseResponse<List<GirlBean>> data) {
+            public void onSuccess(BaseResponse<BaseListBean<List<ArticleBean>>> data) {
                 dataList.postValue(data.getData());
             }
 

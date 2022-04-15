@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
@@ -17,24 +17,23 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
-import com.xxx.xxx.adapter.GirlsAdapter;
+import com.xxx.xxx.adapter.ArticleAdapter;
 import com.xxx.xxx.app.Constant;
-import com.xxx.xxx.databinding.FragmentGirlsBinding;
+import com.xxx.xxx.databinding.FragmentArticlesBinding;
 import com.xxx.xxx.viewModel.ArticlesViewModel;
-import com.xxx.xxx.widget.SpeacesItemDecoration;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
 //注意ActivityBaseBinding换成自己fragment_layout对应的名字 FragmentXxxBinding
-public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, ArticlesViewModel> {
+public class ArticlesFragment extends BaseFragment<FragmentArticlesBinding, ArticlesViewModel> {
 
-    private GirlsAdapter mAdapter;
+    private ArticleAdapter mAdapter;
     private int pageNum = 1;
     private BaseLoadMoreModule mLoadMore;
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.fragment_girls;
+        return R.layout.fragment_articles;
     }
 
     @Override
@@ -69,22 +68,22 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, ArticlesVi
         viewModel.dataList.observe(this, dataList -> {
             if (dataList != null) {
 
-//                if (dataList.size() == 0) {
-//                    mLoadMore.loadMoreEnd(true);
-//                    if (pageNum == 1) {
-//                        //创建适配器.空布局，没有数据时候默认展示的
-//                        mAdapter.setEmptyView(R.layout.list_empty);
-//                    }
-//                } else {
-//                    mLoadMore.loadMoreComplete();
-//                }
-//
-//                if (pageNum == 1) {
-//                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
-//                    mAdapter.setList(dataList);
-//                } else {
-//                    mAdapter.addData(dataList);
-//                }
+                if (dataList.getDatas().size() == 0) {
+                    mLoadMore.loadMoreEnd(true);
+                    if (pageNum == 1) {
+                        //创建适配器.空布局，没有数据时候默认展示的
+                        mAdapter.setEmptyView(R.layout.list_empty);
+                    }
+                } else {
+                    mLoadMore.loadMoreComplete();
+                }
+
+                if (pageNum == 1) {
+                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
+                    mAdapter.setList(dataList.getDatas());
+                } else {
+                    mAdapter.addData(dataList.getDatas());
+                }
             }
         });
 
@@ -98,12 +97,11 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, ArticlesVi
     }
 
     private void initAdapter() {
-        mAdapter = new GirlsAdapter(R.layout.item_girls);
+        mAdapter = new ArticleAdapter(R.layout.item_article);
         mLoadMore = mAdapter.getLoadMoreModule();//创建适配器.上拉加载
         mLoadMore.setEnableLoadMore(true);//打开上拉加载
         mLoadMore.setAutoLoadMore(true);//自动加载
         mLoadMore.setPreLoadNumber(1);//设置滑动到倒数第几个条目时自动加载，默认为1
-        mLoadMore.setEnableLoadMoreIfNotFullPage(true);//当数据不满一页时继续自动加载
         //mLoadMore.setLoadMoreView(new BaseLoadMoreView)//设置自定义加载布局
         mLoadMore.setOnLoadMoreListener(new OnLoadMoreListener() {//设置加载更多监听事件
             @Override
@@ -113,18 +111,8 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, ArticlesVi
             }
         });
 
-        //        binding.rvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //瀑布流
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        //防止Item切换
-        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        //设置间距
-        binding.rvContent.addItemDecoration(new SpeacesItemDecoration(getActivity(), 10));
-        binding.rvContent.setLayoutManager(manager);
+        binding.rvContent.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rvContent.setAdapter(mAdapter);
-        //防止刷新跳动
-        binding.rvContent.setItemAnimator(null);
 
         showDialog();
         viewModel.getDataList(pageNum);
@@ -133,7 +121,7 @@ public class GirlsFragment extends BaseFragment<FragmentGirlsBinding, ArticlesVi
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             Intent intent = new Intent();
             intent.putExtra(Constant.PageTitle, mAdapter.getData().get(position).getTitle());
-            intent.putExtra(Constant.PageUrl, mAdapter.getData().get(position).getUrl());
+            intent.putExtra(Constant.PageUrl, mAdapter.getData().get(position).getLink());
             intent.setClass(getActivity(), WebActivity.class);
             startActivity(intent);
         });

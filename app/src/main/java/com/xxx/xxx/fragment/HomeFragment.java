@@ -38,7 +38,6 @@ import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
-import com.xxx.xxx.viewModel.LoginViewModel;
 import com.xxx.xxx.widget.AutoLineLayoutManager;
 import com.xxx.xxx.widget.CardTransformer;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
