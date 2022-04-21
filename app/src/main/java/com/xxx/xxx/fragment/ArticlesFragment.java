@@ -79,7 +79,6 @@ public class ArticlesFragment extends BaseFragment<FragmentArticlesBinding, Arti
                 }
 
                 if (pageNum == 1) {
-                    //为了防止刷新时候图片闪烁统一用notifyItemRangeInserted刷新
                     mAdapter.setList(dataList.getDatas());
                 } else {
                     mAdapter.addData(dataList.getDatas());

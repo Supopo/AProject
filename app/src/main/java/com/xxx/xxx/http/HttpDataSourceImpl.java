@@ -1,7 +1,9 @@
 package com.xxx.xxx.http;
 
 import com.xxx.xxx.apiserver.ApiServer;
+import com.xxx.xxx.bean.ArticleBean;
 import com.xxx.xxx.bean.BannerBean;
+import com.xxx.xxx.bean.BaseListBean;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,5 +46,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseResponse<List<BannerBean>>> getBanners() {
         return apiService.getBanners();
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(Integer page) {
+        return apiService.getArticles(page);
     }
 }

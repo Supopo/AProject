@@ -523,9 +523,17 @@ RetrofitClient.getInstance().create(DemoApiService.class)
                     }
                 })
                 .subscribe(new DisposableObserver<BaseResponse<List<BannerBean>>>() {
+                    Disposable disposable;
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        super.onSubscribe(d);
+                        disposable = d;
+                    }
+
                     @Override
                     public void onNext(BaseResponse<List<BannerBean>> response) {
-         
+                         disposable.dispose();
                     }
 
                     @Override

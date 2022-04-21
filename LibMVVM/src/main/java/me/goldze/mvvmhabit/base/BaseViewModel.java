@@ -41,6 +41,13 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
         mCompositeDisposable = new CompositeDisposable();
     }
 
+    /**
+     * CompositeDisposable
+     *一个disposable的容器，可以容纳多个disposable，添加和去除的复杂度为O(1)。
+     * 作用：管理订阅事件disposable。
+     * 注意：如果这个CompositeDisposable容器已经是处于dispose的状态，那么所有加进来的disposable都会被自动切断。
+     * @param disposable
+     */
     protected void addSubscribe(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();

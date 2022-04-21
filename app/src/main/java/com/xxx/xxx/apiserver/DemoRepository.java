@@ -3,7 +3,9 @@ package com.xxx.xxx.apiserver;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import com.xxx.xxx.bean.ArticleBean;
 import com.xxx.xxx.bean.BannerBean;
+import com.xxx.xxx.bean.BaseListBean;
 import com.xxx.xxx.http.HttpDataSource;
 import com.xxx.xxx.http.LocalDataSource;
 
@@ -54,6 +56,11 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     @Override
     public Observable<BaseResponse<List<BannerBean>>> getBanners() {
         return mHttpDataSource.getBanners();
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(Integer page) {
+        return mHttpDataSource.getArticles(page);
     }
 
     @Override

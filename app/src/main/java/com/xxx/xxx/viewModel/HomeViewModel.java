@@ -5,11 +5,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.xxx.xxx.apiserver.ApiServer;
 import com.xxx.xxx.apiserver.CustomObserver;
 import com.xxx.xxx.apiserver.DemoRepository;
 import com.xxx.xxx.apiserver.UserRepository;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.bean.NewsBean;
+import com.xxx.xxx.http.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,6 @@ public class HomeViewModel extends BaseViewModel<DemoRepository> {
     }
 
     public void getBanners() {
-        //可以调用addSubscribe()添加Disposable，请求与View周期同步
         model.getBanners()
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
@@ -62,6 +63,25 @@ public class HomeViewModel extends BaseViewModel<DemoRepository> {
                     }
                 });
 
+        // Type2
+        // 可以调用addSubscribe()添加Disposable，请求与View周期同步
+        addSubscribe(
+                RetrofitClient.getInstance().create(ApiServer.class)
+                        .getBanners()
+                        .compose(RxUtils.schedulersTransformer()) //线程调度
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                showDialog();
+                            }
+                        })
+                        .subscribe(new Consumer<List<BannerBean>>() {
+                            @Override
+                            public void accept(List<BannerBean> banners) throws Exception {
+
+                            }
+                        })
+        );
     }
 
     public void getTags() {
