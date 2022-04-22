@@ -45,10 +45,35 @@ public class ArticlesViewModel extends BaseViewModel<DemoRepository> {
                 dataList.postValue(data.getData());
             }
 
+            @Override
+            public void onSubscribe(Disposable d) {
+                super.onSubscribe(d);
+                addSubscribe(d);
+            }
         });
     }
 
     public void getDataList2(int page) {
+        addSubscribe(
+                model.getArticles(page)
+                        .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) // 请求与View周期同步
+                        .compose(RxUtils.schedulersTransformer())  // 线程调度
+                        .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                //请求前的执行 主线程中
+                            }
+                        })
+                        .subscribe(new Consumer() {
+                            @Override
+                            public void accept(Object o) throws Exception {
+
+                            }
+                        }));
+    }
+
+    public void getDataList3(int page) {
         model.getArticles(page)
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) // 请求与View周期同步
                 .compose(RxUtils.schedulersTransformer())  // 线程调度
@@ -78,40 +103,6 @@ public class ArticlesViewModel extends BaseViewModel<DemoRepository> {
                     }
 
                 });
-    }
 
-    private ApiServer userApi = RetrofitClient.getInstance().create(ApiServer.class);
-
-    //不要仓库
-    public void getDataList3(int page) {
-        userApi.getArticles(page)
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) // 请求与View周期同步
-                .compose(RxUtils.schedulersTransformer())  // 线程调度
-                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        //请求前的执行 主线程中
-                    }
-                })
-                .subscribe(new CustomObserver<BaseResponse<List<ArticleBean>>>() {
-                    Disposable disposable;
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
-                        disposable = d;
-                    }
-
-                    @Override
-                    protected void dismissDialog() {
-
-                    }
-
-                    @Override
-                    public void onSuccess(BaseResponse<List<ArticleBean>> data) {
-                    }
-
-                });
     }
 }
