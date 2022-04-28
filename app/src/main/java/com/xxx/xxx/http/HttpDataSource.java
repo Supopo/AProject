@@ -20,6 +20,6 @@ public interface HttpDataSource {
 
     Observable<BaseResponse<List<BannerBean>>> getBanners();
 
-    Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(Integer page);
+    Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(int page);
 
 }

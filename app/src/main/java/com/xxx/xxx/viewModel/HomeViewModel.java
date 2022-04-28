@@ -65,23 +65,23 @@ public class HomeViewModel extends BaseViewModel<DemoRepository> {
 
         // Type2
         // 可以调用addSubscribe()添加Disposable，请求与View周期同步
-        addSubscribe(
-                RetrofitClient.getInstance().create(ApiServer.class)
-                        .getBanners()
-                        .compose(RxUtils.schedulersTransformer()) //线程调度
-                        .doOnSubscribe(new Consumer<Disposable>() {
-                            @Override
-                            public void accept(Disposable disposable) throws Exception {
-                                showDialog();
-                            }
-                        })
-                        .subscribe(new Consumer<List<BannerBean>>() {
-                            @Override
-                            public void accept(List<BannerBean> banners) throws Exception {
-
-                            }
-                        })
-        );
+//        addSubscribe(
+//                RetrofitClient.getInstance().create(ApiServer.class)
+//                        .getBanners()
+//                        .compose(RxUtils.schedulersTransformer()) //线程调度
+//                        .doOnSubscribe(new Consumer<Disposable>() {
+//                            @Override
+//                            public void accept(Disposable disposable) throws Exception {
+//                                showDialog();
+//                            }
+//                        })
+//                        .subscribe(new Consumer<List<BannerBean>>() {
+//                            @Override
+//                            public void accept(List<BannerBean> banners) throws Exception {
+//
+//                            }
+//                        })
+//        );
     }
 
     public void getTags() {

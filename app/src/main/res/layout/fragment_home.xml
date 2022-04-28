@@ -76,6 +76,17 @@
                 app:tabIndicatorHeight="0dp"
                 app:tabRippleColor="@android:color/transparent" />
 
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.xxx.xxx.widget.TrendView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:background="@color/colorPrimary" />
+            </HorizontalScrollView>
+
             <Button
                 android:id="@+id/btn_1"
                 android:layout_width="match_parent"

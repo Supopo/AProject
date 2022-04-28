@@ -32,25 +32,25 @@ public class ArticlesViewModel extends BaseViewModel<DemoRepository> {
     public MutableLiveData<BaseListBean<List<ArticleBean>>> dataList = new MutableLiveData<>();
 
     public void getDataList(int page) {
-        //        userRepository.getArticles(disDialog, dataList, page, 10);
-        RetrofitClient.execute(model.getArticles(page), new CustomObserver<BaseResponse<BaseListBean<List<ArticleBean>>>>() {
-
-            @Override
-            protected void dismissDialog() {
-                disDialog.postValue(true);
-            }
-
-            @Override
-            public void onSuccess(BaseResponse<BaseListBean<List<ArticleBean>>> data) {
-                dataList.postValue(data.getData());
-            }
-
-            @Override
-            public void onSubscribe(Disposable d) {
-                super.onSubscribe(d);
-                addSubscribe(d);
-            }
-        });
+                userRepository.getArticles(disDialog, dataList, page, 10);
+//        RetrofitClient.execute(model.getArticles(page), new CustomObserver<BaseResponse<BaseListBean<List<ArticleBean>>>>() {
+//
+//            @Override
+//            protected void dismissDialog() {
+//                disDialog.postValue(true);
+//            }
+//
+//            @Override
+//            public void onSuccess(BaseResponse<BaseListBean<List<ArticleBean>>> data) {
+//                dataList.postValue(data.getData());
+//            }
+//
+//            @Override
+//            public void onSubscribe(Disposable d) {
+//                super.onSubscribe(d);
+//                addSubscribe(d);
+//            }
+//        });
     }
 
     public void getDataList2(int page) {

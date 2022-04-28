@@ -39,6 +39,10 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -57,6 +61,13 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
 public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseView {
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.TYPE})
+    public @interface Title {
+        String value();
+    }
+
     protected V binding;
     protected VM viewModel;
     private int viewModelId;
@@ -126,6 +137,10 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         initParam();
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding(savedInstanceState);
+
+        //注解内容设置
+        initConfig();
+
         //私有的ViewModel与View的契约事件回调逻辑
         registorUIChangeLiveDataCallBack();
         //页面数据初始化方法
@@ -134,6 +149,16 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         initViewObservable();
         //注册RxBus
         viewModel.registerRxBus();
+    }
+
+    private void initConfig() {
+        Class<? extends BaseActivity> clazz = this.getClass();
+
+        Title annotationTitle = clazz.getAnnotation(Title.class);
+        if (annotationTitle != null) {
+            String title = annotationTitle.value();
+            setTitle(title);
+        }
     }
 
     @Override

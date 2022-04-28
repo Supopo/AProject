@@ -59,7 +59,7 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
     }
 
     @Override
-    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(Integer page) {
+    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(int page) {
         return mHttpDataSource.getArticles(page);
     }
 

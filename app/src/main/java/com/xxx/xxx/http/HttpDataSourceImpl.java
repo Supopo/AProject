@@ -49,7 +49,7 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(Integer page) {
+    public Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(int page) {
         return apiService.getArticles(page);
     }
 }

@@ -26,6 +26,7 @@ import me.goldze.mvvmhabit.databinding.ActivityBaseBinding;
 import static android.view.KeyEvent.KEYCODE_BACK;
 
 
+@BaseActivity.Title("注解")
 //注意ActivityBaseBinding换成自己activity_layout对应的名字 ActivityXxxBinding
 public class WebActivity extends BaseActivity<ActivityWebBinding, WebViewModel> {
     private String mUrl;
@@ -56,7 +57,7 @@ public class WebActivity extends BaseActivity<ActivityWebBinding, WebViewModel> 
     @Override
     public void initData() {
         //设置标题栏
-        setTitle(mTitle, "关闭");
+//        setTitle(mTitle, "关闭");
 
         WebSettings seting = binding.webView.getSettings();
 
