@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.activity.RegisterActivity;
 import com.xxx.xxx.apiserver.DemoRepository;
+import com.xxx.xxx.app.Constant;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.binding.command.BindingConsumer;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.utils.RxUtils;
+import me.goldze.mvvmhabit.utils.SPUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
 
@@ -117,6 +119,7 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                     @Override
                     public void accept(Object o) throws Exception {
                         dismissDialog();
+                        SPUtils.getInstance().put(Constant.IS_LOGIN, true);
                         //保存账号密码
                         model.saveUserName(userName.getValue());
                         model.savePassword(password.getValue());

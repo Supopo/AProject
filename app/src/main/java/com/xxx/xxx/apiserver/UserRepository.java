@@ -92,7 +92,6 @@ public class UserRepository {
             @Override
             public void onSuccess(BaseResponse<BaseListBean<List<ArticleBean>>> data) {
                 dataList.postValue(data.getData());
-                disposable.dispose();
             }
 
         });

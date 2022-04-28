@@ -31,7 +31,7 @@ public class TrendView extends View {
     //默认高温曲线颜色
     private static final int DEFAULT_HIGH_POINT_COLOR = Color.parseColor("#FF8F8F");
     //默认高温曲线阴影颜色
-    private static final int DEFAULT_HIGH_POINT_SHADOW_COLOR = Color.parseColor("#4DFF8F8F");
+    private static final int DEFAULT_HIGH_POINT_SHADOW_COLOR = Color.parseColor("#CCFF8F8F");
     private static final float DEFAULT_CURRENT_POINT_RADIUS = 3.5f;
     private static final int DEFAULT_OUT_DATE_ALPHA = 0x66;
 
@@ -178,7 +178,6 @@ public class TrendView extends View {
         PathEffect effect = new DashPathEffect(new float[]{1, 2, 4, 8}, 1);
 
         //绘制过期曲线
-        mLinePaint.setPathEffect(null);
         mLinePaint.setColor(DEFAULT_HIGH_POINT_COLOR);
         mLinePaint.setAlpha(DEFAULT_OUT_DATE_ALPHA);
         mLinePaint.setStyle(Paint.Style.STROKE);
@@ -187,8 +186,7 @@ public class TrendView extends View {
         //绘制未过期曲线
         mLinePaint.setPathEffect(null);
         mLinePaint.setAlpha(0xFF);
-        mLinePaint.setStyle(Paint.Style.STROKE);
-        mLinePaint.setShadowLayer(dp2px(8), 0, dp2px(5), DEFAULT_HIGH_POINT_COLOR);
+        mLinePaint.setShadowLayer(dp2px(10), 0, dp2px(10), DEFAULT_HIGH_POINT_SHADOW_COLOR);
         canvas.drawPath(mHighPath, mLinePaint);
     }
 
@@ -202,7 +200,7 @@ public class TrendView extends View {
 
             //绘制点
             mPointPaint.setColor(DEFAULT_HIGH_POINT_COLOR);
-            mPointPaint.setShadowLayer(2f, 0, dp2px(3), DEFAULT_HIGH_POINT_SHADOW_COLOR);
+
             PointF point = mHeightPoints.get(i);
             canvas.drawCircle(point.x, point.y, dp2px(DEFAULT_CURRENT_POINT_RADIUS), mPointPaint);
 

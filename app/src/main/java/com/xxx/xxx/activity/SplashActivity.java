@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import com.xxx.xxx.BR;
 import com.xxx.xxx.MainActivity;
 import com.xxx.xxx.R;
+import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.databinding.ActivitySplashBinding;
 import com.xxx.xxx.viewModel.SplashViewModel;
 
@@ -20,6 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import me.goldze.mvvmhabit.base.BaseActivity;
+import me.goldze.mvvmhabit.utils.SPUtils;
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> {
 
@@ -43,6 +45,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
             });
         }
     };
+    private boolean isLogin;
 
     @Override
     public int initContentView(Bundle savedInstanceState) {
@@ -89,6 +92,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
             getWindow().setAttributes(params);
         }
 
+        isLogin = SPUtils.getInstance().getBoolean(Constant.IS_LOGIN);
+
         rlTitle.setVisibility(View.GONE);
         binding.tvJump.setText("跳过 " + recLen);
         timer.schedule(task, 1000, 1000);//等待时间一秒，停顿时间一秒
@@ -103,7 +108,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     }
 
     private void toNext() {
-        startActivity(LoginActivity.class);
+        startActivity(isLogin ? MainActivity.class : LoginActivity.class);
         finish();
     }
 
