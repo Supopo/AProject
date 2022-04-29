@@ -18,5 +18,5 @@ public interface ApiServer {
     Observable<BaseResponse<List<BannerBean>>> getBanners();
 
     @GET("article/list/{page}/json")
-    Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(@Path("page") Integer page);
+    Observable<BaseResponse<BaseListBean<List<ArticleBean>>>> getArticles(@Path("page") int page);
 }

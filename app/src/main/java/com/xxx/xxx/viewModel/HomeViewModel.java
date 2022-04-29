@@ -31,9 +31,6 @@ public class HomeViewModel extends BaseViewModel<DemoRepository> {
     public MutableLiveData<List<NewsBean>> tags = new MutableLiveData<>();
     public String image1 = "https://www.wanandroid.com/blogimgs/42da12d8-de56-4439-b40c-eab66c227a4b.png";
 
-
-    private UserRepository userRepository = UserRepository.getInstance();
-
     //重载构造函数
     public HomeViewModel(@NonNull Application application, DemoRepository repository) {
         super(application, repository);

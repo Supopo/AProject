@@ -1,21 +1,15 @@
 package com.xxx.xxx.apiserver;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.xxx.xxx.bean.ArticleBean;
-import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.bean.BaseListBean;
-import com.xxx.xxx.bean.GirlBean;
 import com.xxx.xxx.http.RetrofitClient;
-import com.xxx.xxx.viewModel.ArticlesViewModel;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import me.goldze.mvvmhabit.base.BaseViewModel;
 import me.goldze.mvvmhabit.http.BaseResponse;
 import me.goldze.mvvmhabit.utils.RxUtils;
 

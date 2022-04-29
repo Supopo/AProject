@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,9 +19,11 @@ import com.xxx.xxx.BR;
 import com.xxx.xxx.R;
 import com.xxx.xxx.activity.WebActivity;
 import com.xxx.xxx.adapter.ArticleAdapter;
+import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.databinding.FragmentArticlesBinding;
 import com.xxx.xxx.viewModel.ArticlesViewModel;
+import com.xxx.xxx.viewModel.LoginViewModel;
 
 import me.goldze.mvvmhabit.base.BaseFragment;
 
@@ -30,6 +33,13 @@ public class ArticlesFragment extends BaseFragment<FragmentArticlesBinding, Arti
     private ArticleAdapter mAdapter;
     private int pageNum = 1;
     private BaseLoadMoreModule mLoadMore;
+
+    @Override
+    public ArticlesViewModel initViewModel() {
+        //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
+        AppViewModelFactory factory = AppViewModelFactory.getInstance(getActivity().getApplication());
+        return ViewModelProviders.of(this, factory).get(ArticlesViewModel.class);
+    }
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

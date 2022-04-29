@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xxx.xxx.apiserver.DemoRepository;
+import com.xxx.xxx.viewModel.ArticlesViewModel;
 import com.xxx.xxx.viewModel.HomeViewModel;
 import com.xxx.xxx.viewModel.LoginViewModel;
 
@@ -50,6 +51,8 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new LoginViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(HomeViewModel.class)) {
            return (T) new HomeViewModel(mApplication, mRepository);
+       }else if (modelClass.isAssignableFrom(ArticlesViewModel.class)) {
+           return (T) new ArticlesViewModel(mApplication, mRepository);
        }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
