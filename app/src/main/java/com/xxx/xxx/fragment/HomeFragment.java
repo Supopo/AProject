@@ -35,6 +35,7 @@ import com.xxx.xxx.adapter.TagsAdapter;
 import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
+import com.xxx.xxx.compose.ComposeActivity;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
@@ -244,6 +245,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 Log.e("--", "主线程发消息");
             }
             mHandler2.sendEmptyMessage(1);
+        });
+
+        binding.btn3.setOnClickListener(lis -> {
+            startActivity(ComposeActivity.class);
         });
 
     }

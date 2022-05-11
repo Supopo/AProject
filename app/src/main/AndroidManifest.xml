@@ -20,31 +20,28 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/MAppTheme"
         android:usesCleartextTraffic="true">
-
-        <!--        设置是否可以分屏-->
-        <!--        这个属性在你target到Android N后，android:resizeableActivity的默认值就是true-->
-        <!--        android:resizeableActivity="false"-->
-
-
-        <!--        10.0无法保持图片 需要的权限-->
-        <!--        android:requestLegacyExternalStorage="true"-->
-
-        <!--        避免10.0出现http联网问题 -->
-        <!--        表示可以明文访问网络http android:usesCleartextTraffic="true" -->
-        <!--        android:networkSecurityConfig="@xml/network_security_config"-->
-
-
+        <activity
+            android:name=".compose.ComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/AppTheme" />
+        <!-- 设置是否可以分屏 -->
+        <!-- 这个属性在你target到Android N后，android:resizeableActivity的默认值就是true -->
+        <!-- android:resizeableActivity="false" -->
+        <!-- 10.0无法保持图片 需要的权限 -->
+        <!-- android:requestLegacyExternalStorage="true" -->
+        <!-- 避免10.0出现http联网问题 -->
+        <!-- 表示可以明文访问网络http android:usesCleartextTraffic="true" -->
+        <!-- android:networkSecurityConfig="@xml/network_security_config" -->
         <activity
             android:name=".activity.ShowPicsActivity"
             android:screenOrientation="portrait" />
 
-
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false" />
-        <!-- 声明最大高宽比 解决不能全屏问题 -->
+            android:required="false" /> <!-- 声明最大高宽比 解决不能全屏问题 -->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
@@ -79,14 +76,12 @@
             android:enabled="true"
             android:exported="true"
             android:process=":remote">
-
             <intent-filter>
                 <action android:name="com.xxx.xxx.test.MyService" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-
-
     </application>
 
 </manifest>

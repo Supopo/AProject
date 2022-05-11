@@ -12,4 +12,5 @@
     <string name="home_menu2">BB</string>
     <string name="home_menu3">CC</string>
     <string name="home_menu4">DD</string>
+    <string name="title_activity_compose">ComposeActivity</string>
 </resources>

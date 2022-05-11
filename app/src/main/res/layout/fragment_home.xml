@@ -81,10 +81,10 @@
                 android:layout_height="wrap_content">
 
                 <com.xxx.xxx.widget.TrendView
-                    android:background="@color/gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_30" />
+                    android:layout_marginBottom="@dimen/dp_30"
+                    android:background="@color/gray" />
             </HorizontalScrollView>
 
             <Button
@@ -98,8 +98,15 @@
                 android:id="@+id/btn_2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
-                android:layout_marginBottom="@dimen/dp_50"
+                android:layout_marginBottom="@dimen/dp_10"
                 android:text="主线程给子线程发送消息" />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="ComposeActivity1" />
 
         </LinearLayout>
     </ScrollView>
