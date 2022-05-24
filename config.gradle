@@ -6,7 +6,7 @@ ext {
             buildToolsVersion  : "31.0.0",
             applicationId      : "com.xxx.xxx",
             minSdkVersion      : 23,
-            targetSdkVersion   : 29,
+            targetSdkVersion   : 31,
             versionCode        : 1,
             versionName        : "1.0",
             sourceCompatibility: 1.8,
@@ -28,8 +28,8 @@ ext {
             'design'                  : "com.android.support:design:${versions["support-version"]}",
             'animated-vector-drawable': "com.android.support:animated-vector-drawable:${versions["support-version"]}",
             'junit'                   : "junit:junit:${versions["junit-version"]}",
-            'runner'                   : "androidx.test:runner:1.2.0",
-            'espresso'                   : "androidx.test.espresso:espresso-core:3.2.0",
+            'runner'                  : "androidx.test:runner:1.2.0",
+            'espresso'                : "androidx.test.espresso:espresso-core:3.2.0",
     ]
     //依赖第三方配置
     dependencies = [
@@ -53,6 +53,8 @@ ext {
             "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.8.0",
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.5",
+            //json解析
+            "fastjson"                             : "com.alibaba:fastjson:1.2.73",
             //material-dialogs
             "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
             "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
@@ -66,17 +68,18 @@ ext {
             //"MVVMHabit"                            : "com.github.xxx:MVVMHabit:3.1.6",
             "butterknife"                          : "com.jakewharton:butterknife:8.6.0",
             "butterknife-compiler"                 : "com.jakewharton:butterknife-compiler:8.6.0",
-            //QMUI小功能控件库
-            "qmui"                                 : "com.qmuiteam:qmui:2.0.0-alpha02",
-            "fastjson"                             : "com.alibaba:fastjson:1.2.73",
+            //QMUI小功能控件库 https://qmuiteam.com/android/get-started
+            "qmui"                                 : "com.qmuiteam:qmui:2.0.0-alpha10",
             //Banner
             "banner"                               : "com.github.pinguo-zhouwei:MZBannerView:v2.0.2",
-            //BaseQuickAdapter 最新版本 latest.integration 但是使用这个有些系统库可能下载不下来
-            "adapter"                              : "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6",
+            //BaseQuickAdapter https://github.com/CymChad/BaseRecyclerViewAdapterHelper/blob/master/readme/0-BaseRecyclerViewAdapterHelper.md
+            "adapter"                              : "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7",
             //jxl解析Excel
             "jxl"                                  : "net.sourceforge.jexcelapi:jxl:2.6.12",
             //文件选择
-            "lfilepicker"                                  : "com.leon:lfilepickerlibrary:1.8.0",
+            "lfilepicker"                          : "com.leon:lfilepickerlibrary:1.8.0",
+            //mmkv数据缓存 https://github.com/Tencent/MMKV/blob/master/README_CN.md
+            "mmkv"                                 : "com.tencent:mmkv:1.2.13",
     ]
 }
 

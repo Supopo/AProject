@@ -1,5 +1,17 @@
 ## 最新日志
-**v1.0.0：2020年7月9日**
+**v3.0.7：2019年1月25日**
+
+- 优化框架代码，解决已知Bug；
+- 新增ViewPager+Fragment例子；
+- 新增RecycleView多布局例子；
+- 升级第三方依赖库；
+- 修改文档说明。
+#### [更多日志](./UpdateLog.md)
+
+#### [AndroidX分支](https://github.com/goldze/MVVMHabit/tree/androidx)
+***
+
+**注：[1.x-废弃版（最后版本：1.2.6.1）](https://github.com/goldze/MVVMHabit/tree/1.2.6.1)、[2.x-顺手版（最后版本：2.0.10）](https://github.com/goldze/MVVMHabit/tree/2.0.10)已停止维护，建议使用当前[3.x-健壮版（最后版本：3.1.6）](https://github.com/goldze/MVVMHabit)。**
 
 > **原文地址：** [https://github.com/goldze/MVVMHabit](https://github.com/goldze/MVVMHabit)
 
@@ -75,11 +87,11 @@ dependencies {
 ```
 或
 
-下载例子程序，在主项目app的build.gradle中依赖例子程序中的**LibMVVM**：
+下载例子程序，在主项目app的build.gradle中依赖例子程序中的**mvvmhabit**：
 ```gradle
 dependencies {	
     ...
-    implementation project(':LibMVVM')
+    implementation project(':mvvmhabit')
 }
 ```
 
@@ -109,7 +121,7 @@ dependencies = [] 是依赖第三方库的配置，可以加新库，但不要�
 ```
 配置Application：
 
-继承**LibMVVM**中的BaseApplication，或者调用
+继承**mvvmhabit**中的BaseApplication，或者调用
 
 ```java
 BaseApplication.setApplication(this);
@@ -147,7 +159,7 @@ CaocConfig.Builder.create()
 <layout>
     <data>
         <variable
-            type="com.xxx.xxx.viewModel.LoginViewModel"
+            type="com.goldze.mvvmhabit.ui.login.LoginViewModel"
             name="viewModel"
         />
     </data>
@@ -224,20 +236,13 @@ BaseViewModel与BaseActivity通过LiveData来处理常用UI逻辑，即可在Vie
 在LoginViewModel中定义
 ```java
 //用户名的绑定
-public MutableLiveData<String> userName = new MutableLiveData<>();
-
- //密码开关观察者
-public SingleLiveEvent<Boolean> pSwitchEvent = new SingleLiveEvent<>();
-
-SingleLiveEvent继承自MutableLiveData，区别是：注册的多个观察员，但只有一个将被通知。
-
-
+public ObservableField<String> userName = new ObservableField<>("");
 ```
 在用户名EditText标签中绑定
 ```xml
 android:text="@={viewModel.userName}"
 ```
-这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.setValue("")设置什么，输入框中就显示什么。
+这样一来，输入框中输入了什么，userName.get()的内容就是什么，userName.set("")设置什么，输入框中就显示什么。
 **注意：** @符号后面需要加=号才能达到双向绑定效果；userName需要是public的，不然viewModel无法找到它。
 
 点击事件绑定：
@@ -344,7 +349,7 @@ url是图片路径，这样绑定后，这个ImageView就会去显示这张图�
 ```xml
 binding:placeholderRes="@{R.mipmap.ic_launcher_round}"
 ```
-> R文件需要在data标签中导入使用，如：`<import type="com.xxx.xxx.R" />`
+> R文件需要在data标签中导入使用，如：`<import type="com.goldze.mvvmhabit.R" />`
 
 BindingAdapter中的实现
 ```java
@@ -362,7 +367,7 @@ public static void setImageUri(ImageView imageView, String url, int placeholderR
 很简单就自定义了一个ImageView图片加载的绑定，学会这种方式，可自定义扩展。
 > 如果你对这些感兴趣，可以下载源码，在binding包中可以看到各类控件的绑定实现方式
 
-##### 2.2.4、RecyclerView绑定 
+##### 2.2.4、RecyclerView绑定
 > RecyclerView也是很常用的一种控件，传统的方式需要针对各种业务要写各种Adapter，如果你使用了mvvmhabit，则可大大简化这种工作量，从此告别setAdapter()。
 
 在ViewModel中定义：
@@ -491,63 +496,6 @@ RetrofitClient.getInstance().create(DemoApiService.class)
                         
         }
     });
-方式一：
-    addSubscribe(
-                RetrofitClient.getInstance().create(ApiServer.class)
-                        .getBanners()
-                        .compose(RxUtils.schedulersTransformer()) //线程调度
-                        .doOnSubscribe(new Consumer<Disposable>() {
-                            @Override
-                            public void accept(Disposable disposable) throws Exception {
-                                showDialog();
-                            }
-                        })
-                        .subscribe(new Consumer<BaseResponse<List<BannerBean>>>() {
-                            @Override
-                            public void accept(BaseResponse<List<BannerBean>> bannerBeans) throws Exception {
-                                dismissDialog();
-                            }
-                        })
-        );
-方式二：
-        //简单粗暴的请求方式
-        RetrofitClient.getInstance().create(ApiServer.class)
-                .getBanners()
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) // 请求与View周期同步
-                .compose(RxUtils.schedulersTransformer())  // 线程调度
-                .compose(RxUtils.exceptionTransformer())   // 网络错误的异常转换
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        showDialog("正在请求");
-                    }
-                })
-                .subscribe(new DisposableObserver<BaseResponse<List<BannerBean>>>() {
-                    Disposable disposable;
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
-                        disposable = d;
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<List<BannerBean>> response) {
-                         disposable.dispose();
-                    }
-
-                    @Override
-                    public void onError(Throwable throwable) {
-                        //关闭对话框
-                        dismissDialog();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        //关闭对话框
-                        dismissDialog();
-                    }
-                });
 
 ```
 在请求时关键需要加入组合操作符`.compose(RxUtils.bindToLifecycle(getLifecycleProvider()))`<br>
@@ -602,7 +550,6 @@ RxBus.getDefault().post(object);
 ```
 #### 3.3.2、Messenger
 Messenger是一个轻量级全局的消息通信工具，在我们的复杂业务中，难免会出现一些交叉的业务，比如ViewModel与ViewModel之间需要有数据交换，这时候可以轻松地使用Messenger发送一个实体或一个空消息，将事件从一个ViewModel回调到另一个ViewModel中。
-最常用的场景例如：MainActivity的ViewModel和它的几个Fragment的ViewModel之间的数据交互。
 
 使用方法：
 
@@ -845,11 +792,13 @@ CAP#1从?的捕获扩展Object
 进阶Android组件化方案，请移步：[MVVMHabitComponent](https://github.com/goldze/MVVMHabitComponent)
 
 ## About
+**goldze：** 本人喜欢尝试新的技术，以后发现有好用的东西，我将会在企业项目中实战，没有问题了就会把它引入到**MVVMHabit**中，一直维护着这套框架，谢谢各位朋友的支持。如果觉得这套框架不错的话，麻烦点个 **star**，你的支持则是我前进的动力！
 
+**QQ群**：84692105
 
 ## License
 
-    Copyright 2020 xxx
+    Copyright 2017 goldze(曾宪泽)
  
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
