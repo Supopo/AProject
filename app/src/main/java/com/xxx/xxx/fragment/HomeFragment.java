@@ -36,6 +36,7 @@ import com.xxx.xxx.app.AppViewModelFactory;
 import com.xxx.xxx.app.Constant;
 import com.xxx.xxx.bean.BannerBean;
 import com.xxx.xxx.compose.ComposeActivity;
+import com.xxx.xxx.compose.ZMWeatherActivity;
 import com.xxx.xxx.databinding.FragmentHomeBinding;
 import com.xxx.xxx.databinding.ItemVpagerBinding;
 import com.xxx.xxx.viewModel.HomeViewModel;
@@ -251,6 +252,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             startActivity(ComposeActivity.class);
         });
 
+        binding.btn4.setOnClickListener(lis -> {
+            startActivity(ZMWeatherActivity.class);
+        });
     }
 
     private Handler mHandler2;

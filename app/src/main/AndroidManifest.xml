@@ -20,11 +20,15 @@
         android:theme="@style/MAppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".compose.ZMWeatherActivity"
+            android:exported="false"
+            android:label="@string/title_activity_zmweather"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".compose.ComposeActivity"
             android:exported="false"
             android:label="@string/title_activity_compose"
-            android:theme="@style/AppTheme" />
-        <!-- 设置是否可以分屏 -->
+            android:theme="@style/AppTheme" /> <!-- 设置是否可以分屏 -->
         <!-- 这个属性在你target到Android N后，android:resizeableActivity的默认值就是true -->
         <!-- android:resizeableActivity="false" -->
         <!-- 10.0无法保持图片 需要的权限 -->
@@ -44,13 +48,13 @@
             android:value="2.4" />
 
         <activity
-            android:exported="true"
             android:name=".activity.LoginActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:exported="true"
             android:name=".activity.SplashActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,17 +64,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:exported="true"
             android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:exported="true"
             android:name=".activity.RegisterActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:exported="true"
             android:name=".activity.WebActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
 
         <service
