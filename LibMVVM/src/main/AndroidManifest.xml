@@ -5,9 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
         <activity
+            android:exported="true"
             android:name=".base.ContainerActivity"
-            android:configChanges="orientation|keyboardHidden"></activity>
+            android:configChanges="orientation|keyboardHidden"/>
         <activity
+            android:exported="true"
             android:name=".crash.DefaultErrorActivity"
             android:process=":error_activity" />
 

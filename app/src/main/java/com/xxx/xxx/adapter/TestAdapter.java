@@ -1,8 +1,10 @@
 package com.xxx.xxx.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.xxx.xxx.bean.TestBean;
@@ -23,4 +25,9 @@ public class TestAdapter extends BaseQuickAdapter<TestBean, BaseViewHolder> impl
         binding.executePendingBindings();
     }
 
+    @NonNull
+    @Override
+    public BaseLoadMoreModule addLoadMoreModule(@NonNull BaseQuickAdapter<?, ?> baseQuickAdapter) {
+        return new BaseLoadMoreModule(baseQuickAdapter);
+    }
 }

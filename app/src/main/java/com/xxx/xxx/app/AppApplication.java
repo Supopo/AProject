@@ -2,8 +2,6 @@ package com.xxx.xxx.app;
 
 import android.content.Context;
 
-import com.squareup.leakcanary.LeakCanary;
-
 import com.xxx.xxx.BuildConfig;
 import com.xxx.xxx.R;
 
@@ -28,11 +26,11 @@ public class AppApplication extends BaseApplication {
         //初始化全局异常崩溃
         initCrash();
         //内存泄漏检测
-        if (BuildConfig.DEBUG) {
-            if (!LeakCanary.isInAnalyzerProcess(this)) {
-                LeakCanary.install(this);
-            }
-        }
+//        if (BuildConfig.DEBUG) {
+//            if (!LeakCanary.isInAnalyzerProcess(this)) {
+//                LeakCanary.install(this);
+//            }
+//        }
     }
 
     private void initCrash() {

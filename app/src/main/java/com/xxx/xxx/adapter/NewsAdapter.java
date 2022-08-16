@@ -1,8 +1,10 @@
 package com.xxx.xxx.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.xxx.xxx.bean.NewsBean;
@@ -35,5 +37,11 @@ public class NewsAdapter extends BaseQuickAdapter<NewsBean, BaseViewHolder> impl
             int type = (Integer) payloads.get(0);// 刷新哪个部分 标志位
 
         }
+    }
+
+    @NonNull
+    @Override
+    public BaseLoadMoreModule addLoadMoreModule(@NonNull BaseQuickAdapter<?, ?> baseQuickAdapter) {
+        return new BaseLoadMoreModule(baseQuickAdapter);
     }
 }
