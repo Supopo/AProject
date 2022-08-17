@@ -3,16 +3,19 @@ package com.xxx.xxx.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import com.xxx.xxx.R
 import com.xxx.xxx.compose.ui.theme.AProjectTheme
 
@@ -21,12 +24,13 @@ import com.xxx.xxx.compose.ui.theme.AProjectTheme
  * 1.练手
  */
 class ZMWeatherActivity : ComponentActivity() {
-    private var nowIndex: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //状态监听
+        var nowIndex by mutableStateOf(0)
         setContent {
-            AProjectTheme {
+            AProjectTheme(nowIndex == 0 || nowIndex == 2) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     Modifier.fillMaxSize(),
@@ -34,67 +38,38 @@ class ZMWeatherActivity : ComponentActivity() {
                 ) {
                     Column(
                         Modifier.fillMaxSize(),
-//                        Arrangement.Bottom//子布局底部对齐
                     ) {
-                        Text("内容", Modifier.weight(1f))
-                        ShowBottomMenu(0)
+                        LazyColumn(Modifier.weight(1f)) {
+                            items(5) { index ->
+                                Row(
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 5.dp, horizontal = 10.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.mipmap.ic_logo),
+                                        contentDescription = "",
+                                        Modifier
+                                            .size(60.dp)
+                                            .padding(end = 20.dp)
+                                    )
+                                    Text(
+                                        text = "巴拉巴拉小魔仙~", modifier = Modifier
+                                            .weight(1f),
+                                        //文字内部居中
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+                            }
+                        }
+                        BottomMenuBar(nowIndex) {
+                            nowIndex = it
+                        }
                     }
                 }
             }
         }
     }
-
-    @Composable
-    fun ShowBottomMenu(index: Int) {
-        Row(
-            Modifier.fillMaxWidth(),
-            Arrangement.SpaceBetween,
-            ) {
-            BottomMenuItem(
-                0,
-                R.mipmap.table_ic_weather_normal,
-                "天气",
-                if (index == 0) Color.Blue else Color.Gray
-            )
-            BottomMenuItem(
-                1,
-                R.mipmap.table_ic_calendar_normal,
-                "90天",
-                if (index == 1) Color.Blue else Color.Gray
-            )
-            BottomMenuItem(
-                2,
-                R.mipmap.table_ic_find_normal,
-                "发现",
-                if (index == 2) Color.Blue else Color.Gray
-            )
-            BottomMenuItem(
-                3,
-                R.mipmap.table_ic_me_normal,
-                "我的",
-                if (index == 3) Color.Blue else Color.Gray
-            )
-        }
-    }
-
-
-    @Composable
-    fun BottomMenuItem(index: Int, icon: Int, title: String, tint: Color) {
-        Column {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = title,
-                tint = tint,
-                modifier = Modifier.clickable {
-//                    ClickShow(index)
-                })
-            Text(text = title)
-        }
-    }
-
-    @Composable
-    private fun ClickShow(index: Int) {
-        nowIndex = index
-        ShowBottomMenu(index = nowIndex)
-    }
 }
+
