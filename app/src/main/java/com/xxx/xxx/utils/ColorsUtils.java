@@ -25,7 +25,6 @@ public class ColorsUtils {
     }
 
     public static int randomColor() {
-        int color = Color.argb(255, new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256));
-        return color;
+        return Color.argb(255, new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256));
     }
 }

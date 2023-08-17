@@ -8,6 +8,7 @@ import com.xxx.xxx.R;
 import me.goldze.mvvmhabit.base.BaseApplication;
 import me.goldze.mvvmhabit.crash.CaocConfig;
 import me.goldze.mvvmhabit.utils.KLog;
+import me.goldze.mvvmhabit.utils.Logger;
 
 
 public class AppApplication extends BaseApplication {
@@ -21,7 +22,9 @@ public class AppApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-        //是否开启打印日志
+        //日志view，屏幕快速点击三下
+        Logger.init(this);
+        //是否开启网络请求打印日志
         KLog.init(BuildConfig.DEBUG);
         //初始化全局异常崩溃
         initCrash();
