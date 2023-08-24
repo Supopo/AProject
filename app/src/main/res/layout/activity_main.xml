@@ -28,7 +28,7 @@
             android:background="#F0F0F0" />
 
 
-        <!--        app:itemBackground="@null" 取消点击水波纹-->
+        <!--        app:itemRippleColor="@null" 取消点击水波纹-->
         <!--        app:itemHorizontalTranslationEnabled="false"  取消位移偏量-->
         <!--        app:labelVisibilityMode="labeled"  文字常显示-->
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:elevation="8dp"
-            app:itemBackground="@null"
+            app:itemRippleColor="@null"
             app:itemHorizontalTranslationEnabled="false"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_menus" />
